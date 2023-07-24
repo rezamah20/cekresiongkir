@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">cekresiongkir</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+
+    <string-array name="resikurir_array">
+        <item>Antar Aja</item>
+        <item>Deliveree</item>
+        <item>JNT</item>
+        <item>JNE Express</item>
+        <item>Lala Move</item>
+        <item>Lion</item>
+        <item>Ninja Express</item>
+        <item>Paxel</item>
+        <item>RPX</item>
+        <item>SAP</item>
+        <item>SiCepat</item>
+        <item>Tiki</item>
+    </string-array>
+
+    <string-array name="resikurir_array_kode" translatable="false">
+        <item>anteraja</item>
+        <item>deliveree</item>
+        <item>jnt</item>
+        <item>jne</item>
+        <item>lalamove</item>
+        <item>lion</item>
+        <item>ninja</item>
+        <item>paxel</item>
+        <item>rpx</item>
+        <item>sap</item>
+        <item>sicepat</item>
+        <item>tiki</item>
+    </string-array>
+
+
+</resources>
