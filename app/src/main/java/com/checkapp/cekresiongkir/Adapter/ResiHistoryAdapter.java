@@ -33,6 +33,7 @@ public class ResiHistoryAdapter extends RecyclerView.Adapter<ResiHistoryAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ResiHistoryViewHolder holder, int position) {
+
         holder.history_status.setText(data.getHistory().get(position).getStatus());
         holder.history_note.setText(data.getHistory().get(position).getNote());
         holder.history_update.setText(data.getHistory().get(position).getUpdated_at());

@@ -1,5 +1,6 @@
 package com.checkapp.cekresiongkir.network.cekresi;
 
+import com.checkapp.cekresiongkir.network.Address;
 import com.checkapp.cekresiongkir.network.cekongkir.CekOngkir;
 import com.checkapp.cekresiongkir.network.cekongkir.PostKurir;
 
@@ -16,6 +17,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface ApiEndpoint {
 
@@ -38,4 +40,7 @@ public interface ApiEndpoint {
     //@Headers({"Content-Type: application/json"})
     @POST("v1/rates/couriers")
     Call<CekOngkir> getKurir(@Body RequestBody postKurir);
+
+    @GET("/v1/maps/areas?countries=ID")
+    Call<Address> getAddress(@Query("input") String address, @Query("type") String type);
 }

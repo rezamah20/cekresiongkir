@@ -30,8 +30,10 @@ import com.checkapp.cekresiongkir.Adapter.ResiHistoryAdapter;
 import com.checkapp.cekresiongkir.Adapter.SpinnerKurirAdapter;
 import com.checkapp.cekresiongkir.R;
 import com.checkapp.cekresiongkir.databinding.FragmentHomeBinding;
+import com.checkapp.cekresiongkir.network.Address;
 import com.checkapp.cekresiongkir.network.BitshipResi;
 import com.checkapp.cekresiongkir.network.MainContract;
+import com.checkapp.cekresiongkir.network.cekongkir.CekOngkir;
 import com.checkapp.cekresiongkir.network.cekresi.CekResi;
 import com.checkapp.cekresiongkir.network.cekresi.History;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -60,7 +62,6 @@ public class HomeFragment extends Fragment implements MainContract.View {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
-
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -108,19 +109,15 @@ public class HomeFragment extends Fragment implements MainContract.View {
             }
         });
 
-
-
-        presenter = new BitshipResi(this);
-
-
         cekresi = binding.btnCekresi;
-
+        MainContract.View v = this;
         cekresi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (String.valueOf(txt.getText()).equals("")){
                     Toast.makeText(getContext(), "Nomor Resi tidak boleh kosong", Toast.LENGTH_LONG).show();
                 }else {
+                    presenter = new BitshipResi(v);
                     presenter.setupENV(String.valueOf(txt.getText()), kodeKurir);
                     //presenter.setupENV(String.valueOf(txt.getText()), kodeKurir);
                 }
@@ -178,6 +175,16 @@ public class HomeFragment extends Fragment implements MainContract.View {
         }
        //
 //        Log.d("ini json", String.valueOf(cekResi.getHistory().get(data.getHistory().size() - 1).getNote()));
+    }
+
+    @Override
+    public void onResultSearch(Address data) {
+
+    }
+
+    @Override
+    public void onResultOngkir(CekOngkir data) {
+
     }
 
     @Override

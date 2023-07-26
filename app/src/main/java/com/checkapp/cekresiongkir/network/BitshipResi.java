@@ -26,7 +26,7 @@ import retrofit2.Retrofit;
 public class BitshipResi implements MainContract.Presenter{
     CekResi cekresi = new CekResi();
     CekOngkir cekOngkir = new CekOngkir();
-    PostKurir postKurir = new PostKurir();
+    Address address = new Address();
 
     ApiEndpoint endpoint;
     MainContract.View view;
@@ -50,7 +50,6 @@ public class BitshipResi implements MainContract.Presenter{
                             if(response.body() == null){
                                 view.onErrorResi();
                              //   view.showMessage("Data Tidak Di temukan");
-
                             }
 
                             Log.d("ini json", String.valueOf(response.body()));
@@ -66,7 +65,7 @@ public class BitshipResi implements MainContract.Presenter{
     }
 
     @Override
-    public void getKurir() {
+    public void getKurir(String originid, String destiid, String berat) {
 
         JSONObject jsonObject = new JSONObject();
         JSONArray array = new JSONArray();
@@ -78,26 +77,20 @@ public class BitshipResi implements MainContract.Presenter{
             internalObject.put("length",30);
             internalObject.put("width",15);
             internalObject.put("height",30);
-            internalObject.put("weight",200);
+            internalObject.put("weight",berat);
             internalObject.put("quantity",1);
             array.put(internalObject);
 
-            jsonObject.put("origin_area_id", "IDNP6IDNC148IDND836IDZ12410");
-            jsonObject.put("destination_area_id", "IDNP6IDNC148IDND836IDZ12430");
-            jsonObject.put("couriers", "jnt");
-
+            jsonObject.put("origin_area_id", originid);
+            jsonObject.put("destination_area_id", destiid);
+            jsonObject.put("couriers", "jnt,jne,anteraja");
             jsonObject.put("items", array);
-
-            ArrayList<String> test = new ArrayList<>();
-            test.add("name: testnama");
-            test.add("alamat: initestalamat");
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
         String jsonStr = jsonObject.toString();
         Log.d("ini json respon", jsonStr);
-
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),jsonObject.toString());
 
 
@@ -107,14 +100,9 @@ public class BitshipResi implements MainContract.Presenter{
                     public void onResponse(Call<CekOngkir> call, Response<CekOngkir> response) {
                         cekOngkir = response.body();
 
-                        Log.d("ini json respon", String.valueOf(response.raw()));
-                       // Log.d("ini json respon", String.valueOf(response.errorBody()));
-                        Log.d("ini json respon", String.valueOf(response.code()));
-                        Log.d("ini json respon", String.valueOf(response.body()));
-                       // Log.d("ini json respon", String.valueOf(response.isSuccessful()));
+                       // Log.d("ini json respon", String.valueOf(response.body()));
 
-
-
+                        view.onResultOngkir(cekOngkir);
                     }
 
                     @Override
@@ -123,6 +111,26 @@ public class BitshipResi implements MainContract.Presenter{
                         Log.d("ini json failed", String.valueOf(t));
                     }
 
+                });
+    }
+
+    @Override
+    public void getAddress(String add){
+        Log.d("ini json address", "getaddress");
+        endpoint.getAddress(add,"single")
+                .enqueue(new Callback<Address>() {
+                    @Override
+                    public void onResponse(Call<Address> call, Response<Address> response) {
+                        address = response.body();
+
+                        view.onResultSearch(address);
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<Address> call, Throwable t) {
+
+                    }
                 });
     }
 
