@@ -6,17 +6,65 @@
     android:layout_height="match_parent"
     tools:context=".ui.dashboard.DashboardFragment">
 
-    <TextView
-        android:id="@+id/text_dashboard"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="vertical"
+        android:background="@color/purple_200"
+        tools:ignore="MissingConstraints"
+        android:padding="10dp"
+        >
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/MyDenseOutlined"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                app:hintEnabled="false"
+                android:paddingBottom="10dp"
+                >
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputorigin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:hint="Masukan Asal Pengirim"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    tools:ignore="HardcodedText" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/MyDenseOutlined"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            app:hintEnabled="false"
+            android:paddingBottom="10dp"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputDestination"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:hint="Masukan Tujuan Pengirim"
+                android:lines="1"
+                android:maxLines="1"
+                android:singleLine="true"
+                tools:ignore="HardcodedText" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btn_cekongkir"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cek Ongkir"
+            app:layout_constraintTop_toBottomOf="@+id/lnSpinner"
+            android:backgroundTint="@color/teal_200"
+            />
+
+    </LinearLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

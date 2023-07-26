@@ -96,6 +96,10 @@ public class HomeFragment extends Fragment implements MainContract.View {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 kodeKurir = spinnerKurirAdapter.kodeKurir[i];
                 Log.d("ini json", spinnerKurirAdapter.kodeKurir[i]);
+
+                Log.d("ini json", "text : "+txt.getText());
+
+
             }
 
             @Override
@@ -117,7 +121,7 @@ public class HomeFragment extends Fragment implements MainContract.View {
                 if (String.valueOf(txt.getText()).equals("")){
                     Toast.makeText(getContext(), "Nomor Resi tidak boleh kosong", Toast.LENGTH_LONG).show();
                 }else {
-                    presenter.setupENV("v1", "68ffba86-2f4e-4342-96a5-97c1f92bb2c8a");
+                    presenter.setupENV(String.valueOf(txt.getText()), kodeKurir);
                     //presenter.setupENV(String.valueOf(txt.getText()), kodeKurir);
                 }
             }
@@ -178,17 +182,22 @@ public class HomeFragment extends Fragment implements MainContract.View {
 
     @Override
     public void onErrorResi() {
+        resiAdapter = new ResiAdapter(getActivity(), getContext(), cekResi);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(resiAdapter);
+
         llMain.setVisibility(View.GONE);
-        recyclerView.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
         recyclerViewHistory.setVisibility(View.GONE);
         floatingActionButton.setVisibility(View.GONE);
-        Log.d("ini json", "error");
+        Log.d("ini json", "error tidak ada");
     }
 
     @Override
     public void showMessage(String msg) {
         Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
-        Log.d("ini json", msg);
+       // Log.d("ini json", msg);
     }
 
     @Override

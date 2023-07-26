@@ -14,15 +14,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiService {
 
-    private static String B_URL = "";
     private static Retrofit retrofit = null;
 
-    private static String crediential;
 
     public static Retrofit getUrl(String BASE_URL, String KEY, String API_KEY){
-
-        crediential = Credentials.basic(KEY,API_KEY);
-
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.readTimeout(10, TimeUnit.SECONDS);
         builder.connectTimeout(30, TimeUnit.SECONDS);
@@ -47,6 +42,5 @@ public class ApiService {
                     .build();
         }
         return  retrofit;
-
     }
 }

@@ -8,6 +8,7 @@ import java.util.List;
 public interface MainContract {
     interface Presenter{
         void getResi();
+        void getKurir();
         void setupENV(String waybill_id, String courier_code);
     }
 
