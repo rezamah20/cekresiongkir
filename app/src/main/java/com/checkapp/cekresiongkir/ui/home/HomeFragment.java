@@ -70,15 +70,17 @@ public class HomeFragment extends Fragment implements MainContract.View {
         TextInputEditText txt = binding.inputresi;
         recyclerView = binding.rvresi;
         recyclerViewHistory = binding.rvhistory;
-
+        progressBar = binding.progressBar;
         floatingActionButton = binding.floatingbutton;
+        cekresi = binding.btnCekresi;
+        llMain = binding.llMain;
+        MainContract.View v = this;
+
 
         Spinner spinnerresi = binding.kurirDropdown;
         ArrayAdapter<String> spinnerresiadapter = new ArrayAdapter<String>(getContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, getResources().getStringArray(R.array.resikurir_array));
         spinnerresiadapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
 
-        progressBar = binding.progressBar;
-        llMain = binding.llMain;
         llMain.setVisibility(View.GONE);
         showResi();
 
@@ -106,8 +108,6 @@ public class HomeFragment extends Fragment implements MainContract.View {
             }
         });
 
-        cekresi = binding.btnCekresi;
-        MainContract.View v = this;
         cekresi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -125,7 +125,6 @@ public class HomeFragment extends Fragment implements MainContract.View {
 
 
     private void showResi(){
-
         if (homeViewModel.getCekResi().getValue() != null){
             Log.d("ini json", "cek resi");
             homeViewModel.getCekResi().observe(getViewLifecycleOwner(), new Observer<CekResi>() {
