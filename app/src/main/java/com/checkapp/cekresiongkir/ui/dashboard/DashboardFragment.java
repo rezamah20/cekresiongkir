@@ -186,9 +186,10 @@ public class DashboardFragment extends Fragment implements MainContract.View {
     }
 
     @Override
-    public void onErrorResi() {
+    public void onErrorResi(CekResi data) {
 
     }
+
 
     @Override
     public void showMessage(String msg) {

@@ -1,23 +1,34 @@
 package com.checkapp.cekresiongkir.ui.home;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class HomeViewModel extends ViewModel {
+import com.checkapp.cekresiongkir.network.cekresi.CekResi;
+
+public class HomeViewModel extends ViewModel{
 
     private final MutableLiveData<String> mText;
+    private MutableLiveData<CekResi> cekResiMutableLiveData;
 
     public HomeViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("");
+        cekResiMutableLiveData = new MutableLiveData<>();
     }
 
-    public LiveData<String> getText() {
+    public MutableLiveData<String> getText() {
         return mText;
     }
 
-    public void kurirlist() {
+    public MutableLiveData<CekResi> getCekResi(){
+        if (cekResiMutableLiveData.getValue() != null){
+            setCekResi(cekResiMutableLiveData.getValue());
+        } else {
+            setCekResi(cekResiMutableLiveData.getValue());
+        }
+        return cekResiMutableLiveData;
+    }
 
+    public void setCekResi(CekResi cekResi) {
+        this.cekResiMutableLiveData.postValue(cekResi);
     }
 }

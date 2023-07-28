@@ -21,6 +21,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -46,6 +47,7 @@ import java.util.List;
 
 public class HomeFragment extends Fragment implements MainContract.View {
 
+    private HomeViewModel homeViewModel;
     private FragmentHomeBinding binding;
     private ResiAdapter resiAdapter;
     private ResiHistoryAdapter resiHistoryAdapter;
@@ -61,8 +63,7 @@ public class HomeFragment extends Fragment implements MainContract.View {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
-
+        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
@@ -79,6 +80,7 @@ public class HomeFragment extends Fragment implements MainContract.View {
         progressBar = binding.progressBar;
         llMain = binding.llMain;
         llMain.setVisibility(View.GONE);
+        showResi();
 
         // spinnerresi.
         SpinnerKurirAdapter spinnerKurirAdapter = new SpinnerKurirAdapter(getContext());
@@ -96,11 +98,6 @@ public class HomeFragment extends Fragment implements MainContract.View {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 kodeKurir = spinnerKurirAdapter.kodeKurir[i];
-                Log.d("ini json", spinnerKurirAdapter.kodeKurir[i]);
-
-                Log.d("ini json", "text : "+txt.getText());
-
-
             }
 
             @Override
@@ -118,15 +115,57 @@ public class HomeFragment extends Fragment implements MainContract.View {
                     Toast.makeText(getContext(), "Nomor Resi tidak boleh kosong", Toast.LENGTH_LONG).show();
                 }else {
                     presenter = new BitshipResi(v);
+                   // presenter.setupENV(String.valueOf(txt.getText()), kodeKurir);
                     presenter.setupENV(String.valueOf(txt.getText()), kodeKurir);
-                    //presenter.setupENV(String.valueOf(txt.getText()), kodeKurir);
                 }
             }
         });
-
-        final TextView textView = binding.textHome;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
+    }
+
+
+    private void showResi(){
+
+        if (homeViewModel.getCekResi().getValue() != null){
+            Log.d("ini json", "cek resi");
+            homeViewModel.getCekResi().observe(getViewLifecycleOwner(), new Observer<CekResi>() {
+                @Override
+                public void onChanged(CekResi cekResi) {
+                    if (cekResi != null) {
+                        resiAdapter = new ResiAdapter(getActivity(), getContext(), cekResi);
+                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+                        recyclerView.setLayoutManager(layoutManager);
+                        recyclerView.setAdapter(resiAdapter);
+                        resiAdapter.notifyDataSetChanged();
+
+                        //resihistoryadapter
+                        resiHistoryAdapter = new ResiHistoryAdapter(getActivity(), getContext(), cekResi);
+                        RecyclerView.LayoutManager layoutManager2 = new LinearLayoutManager(getContext());
+                        recyclerViewHistory.setLayoutManager(layoutManager2);
+                        recyclerViewHistory.setAdapter(resiHistoryAdapter);
+                        resiHistoryAdapter.notifyDataSetChanged();
+
+
+                        llMain.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
+                        recyclerViewHistory.setVisibility(View.VISIBLE);
+                        floatingActionButton.setVisibility(View.VISIBLE);
+                    }
+                }
+            });
+        }
+    }
+
+    public void showResierror(){
+        resiAdapter = new ResiAdapter(getActivity(), getContext(), cekResi);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(resiAdapter);
+
+        llMain.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
+        recyclerViewHistory.setVisibility(View.GONE);
+        floatingActionButton.setVisibility(View.GONE);
     }
 
     @Override
@@ -138,7 +177,6 @@ public class HomeFragment extends Fragment implements MainContract.View {
     @Override
     public void onLoadingResi(boolean loadng, int progress) {
         if (loadng){
-            Log.d("ini json", "on progress");
             llMain.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
             recyclerViewHistory.setVisibility(View.GONE);
@@ -153,28 +191,9 @@ public class HomeFragment extends Fragment implements MainContract.View {
     public void onResultResi(CekResi data) {
         this.cekResi = data;
         if (cekResi != null){
-            //resi adapter
-            resiAdapter = new ResiAdapter(getActivity(), getContext(), cekResi);
-            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-            recyclerView.setLayoutManager(layoutManager);
-            recyclerView.setAdapter(resiAdapter);
-            resiAdapter.notifyDataSetChanged();
-
-            //resihistoryadapter
-            resiHistoryAdapter = new ResiHistoryAdapter(getActivity(), getContext(), cekResi);
-            RecyclerView.LayoutManager layoutManager2 = new LinearLayoutManager(getContext());
-            recyclerViewHistory.setLayoutManager(layoutManager2);
-            recyclerViewHistory.setAdapter(resiHistoryAdapter);
-            resiHistoryAdapter.notifyDataSetChanged();
-
-
-            llMain.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.VISIBLE);
-            recyclerViewHistory.setVisibility(View.VISIBLE);
-            floatingActionButton.setVisibility(View.VISIBLE);
+            homeViewModel.getCekResi().setValue(cekResi);
+            showResi();
         }
-       //
-//        Log.d("ini json", String.valueOf(cekResi.getHistory().get(data.getHistory().size() - 1).getNote()));
     }
 
     @Override
@@ -188,17 +207,9 @@ public class HomeFragment extends Fragment implements MainContract.View {
     }
 
     @Override
-    public void onErrorResi() {
-        resiAdapter = new ResiAdapter(getActivity(), getContext(), cekResi);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(resiAdapter);
-
-        llMain.setVisibility(View.GONE);
-        recyclerView.setVisibility(View.VISIBLE);
-        recyclerViewHistory.setVisibility(View.GONE);
-        floatingActionButton.setVisibility(View.GONE);
-        Log.d("ini json", "error tidak ada");
+    public void onErrorResi(CekResi cekResi) {
+        homeViewModel.getCekResi().setValue(cekResi);
+        showResierror();
     }
 
     @Override

@@ -19,7 +19,7 @@ public interface MainContract {
         void onResultResi(CekResi data);
         void onResultSearch(Address data);
         void onResultOngkir(CekOngkir data);
-        void onErrorResi();
+        void onErrorResi(CekResi data);
 
         void showMessage(String msg);
         String getOrigin();

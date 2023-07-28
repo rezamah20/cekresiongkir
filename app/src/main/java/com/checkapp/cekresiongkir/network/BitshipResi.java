@@ -36,29 +36,31 @@ public class BitshipResi implements MainContract.Presenter{
 
     public BitshipResi(MainContract.View view){
         this.view = view;
-        endpoint = ApiService.getUrl("https://api.biteship.com/","1","")
+        endpoint = ApiService.getUrl("https://mocki.io/","1","biteship_live.aaaeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibGl2ZWFwaSIsInVzZXJJZCI6IjY0YjYwYmIzOTlhOTQxNmY4NDdkOTk4ZSIsImlhdCI6MTY5MDAzNTExMH0.8azALQHi3Za_Le3mmwGNgJ8uuSNJg_mIOtLcCw2u1iw")
                 .create(ApiEndpoint.class);
     }
 
     @Override
     public void getResi() {
-            endpoint.getResia(waybill, courier_code)
+            endpoint.getResia()//waybill, courier_code
                     .enqueue(new Callback<CekResi>() {
                         @Override
                         public void onResponse(Call<CekResi> call, Response<CekResi> response) {
                             cekresi = response.body();
                             if(response.body() == null){
-                                view.onErrorResi();
-                             //   view.showMessage("Data Tidak Di temukan");
+                                view.onErrorResi(null);
+                                 Log.d("ini json", "null");
+                                //   view.showMessage("Data Tidak Di temukan");
                             }
 
-                            Log.d("ini json", String.valueOf(response.body()));
                         }
 
                         @Override
                         public void onFailure(Call<CekResi> call, Throwable t) {
                             t.getMessage();
-                            Log.d("ini json", String.valueOf(t));
+                            view.onErrorResi(null);
+                          //  Log.d("ini json", "null");
+
                         }
 
                     });

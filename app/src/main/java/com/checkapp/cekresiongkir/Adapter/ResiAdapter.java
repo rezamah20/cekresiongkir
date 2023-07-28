@@ -40,7 +40,7 @@ public class ResiAdapter extends RecyclerView.Adapter<ResiAdapter.ResiViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ResiViewHolder holder, int position) {
-        Log.d("ini json", "cek resi");
+       // Log.d("ini json", "cek resi");
         if (data != null) {
             holder.waybill.setText(data.getWaybill_id());
             holder.status.setText(data.getStatus());
@@ -49,10 +49,10 @@ public class ResiAdapter extends RecyclerView.Adapter<ResiAdapter.ResiViewHolder
             holder.terahkirupdate.setText(data.getHistory().get(data.getHistory().size() - 1).getUpdated_at());
             holder.resiada.setVisibility(View.VISIBLE);
             holder.resitidakada.setVisibility(View.GONE);
-            Log.d("ini json", "Resi di temukan");
+           // Log.d("ini json", "Resi di temukan");
 
         }else {
-            Log.d("ini json", "Resi Tidak Di temukan");
+          //  Log.d("ini json", "Resi Tidak Di temukan");
             holder.resiada.setVisibility(View.GONE);
             holder.resitidakada.setVisibility(View.VISIBLE);
             holder.statusresi.setText("Resi Tidak Di temukan");
