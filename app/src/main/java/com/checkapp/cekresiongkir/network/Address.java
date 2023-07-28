@@ -13,11 +13,11 @@ public class Address {
     @Expose
     List<areas> areas= null;
 
-    public List<Address.areas> getAreas() {
+    public List<areas> getAreas() {
         return areas;
     }
 
-    public void setAreas(List<Address.areas> areas) {
+    public void setAreas(List<areas> areas) {
         this.areas = areas;
     }
 
