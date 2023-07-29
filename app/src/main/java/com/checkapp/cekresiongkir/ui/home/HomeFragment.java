@@ -26,9 +26,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.checkapp.cekresiongkir.Adapter.ResiAdapter;
+import com.checkapp.cekresiongkir.Adapter.ResiAdapterDB;
 import com.checkapp.cekresiongkir.Adapter.ResiHistoryAdapter;
 import com.checkapp.cekresiongkir.Adapter.SpinnerKurirAdapter;
 import com.checkapp.cekresiongkir.R;
+import com.checkapp.cekresiongkir.database.DatabaseHandler;
+import com.checkapp.cekresiongkir.database.ResiModel;
 import com.checkapp.cekresiongkir.databinding.FragmentHomeBinding;
 import com.checkapp.cekresiongkir.network.Address;
 import com.checkapp.cekresiongkir.network.BitshipResi;
@@ -38,21 +41,30 @@ import com.checkapp.cekresiongkir.network.cekresi.CekResi;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.ArrayList;
+
 
 public class HomeFragment extends Fragment implements MainContract.View {
 
     private HomeViewModel homeViewModel;
     private FragmentHomeBinding binding;
     private ResiAdapter resiAdapter;
+    private ResiAdapterDB resiAdapterDB;
     private ResiHistoryAdapter resiHistoryAdapter;
     private RecyclerView recyclerView;
     private RecyclerView recyclerViewHistory;
+    private RecyclerView recyclerViewdb;
     private BitshipResi presenter;
     private Button cekresi;
     private CekResi cekResi;
     private ProgressBar progressBar;
     private LinearLayout llMain;
+    private LinearLayout lnresidb;
     private FloatingActionButton floatingActionButton;
+    private DatabaseHandler db;
+    private ArrayList<ResiModel> list;
+    private MainContract.View v;
+    TextInputEditText txt;
     String kodeKurir;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -61,22 +73,27 @@ public class HomeFragment extends Fragment implements MainContract.View {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        TextInputEditText txt = binding.inputresi;
+        txt = binding.inputresi;
         recyclerView = binding.rvresi;
         recyclerViewHistory = binding.rvhistory;
+        recyclerViewdb = binding.rvresidatadb;
         progressBar = binding.progressBar;
         floatingActionButton = binding.floatingbutton;
         cekresi = binding.btnCekresi;
         llMain = binding.llMain;
-        MainContract.View v = this;
+        lnresidb = binding.lnresidb;
+        v = this;
+        db = new DatabaseHandler(getContext());
+
+
 
 
         Spinner spinnerresi = binding.kurirDropdown;
         ArrayAdapter<String> spinnerresiadapter = new ArrayAdapter<String>(getContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, getResources().getStringArray(R.array.resikurir_array));
         spinnerresiadapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
 
-        llMain.setVisibility(View.GONE);
         showResi();
+        showresidb();
 
         // spinnerresi.
         SpinnerKurirAdapter spinnerKurirAdapter = new SpinnerKurirAdapter(getContext());
@@ -99,6 +116,16 @@ public class HomeFragment extends Fragment implements MainContract.View {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
+            }
+        });
+
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showresidb();
+                lnresidb.setVisibility(View.VISIBLE);
+                hideResi();
+                recyclerView.setVisibility(View.GONE);
             }
         });
 
@@ -139,6 +166,7 @@ public class HomeFragment extends Fragment implements MainContract.View {
                         resiHistoryAdapter.notifyDataSetChanged();
 
 
+                        lnresidb.setVisibility(View.GONE);
                         llMain.setVisibility(View.GONE);
                         recyclerView.setVisibility(View.VISIBLE);
                         recyclerViewHistory.setVisibility(View.VISIBLE);
@@ -155,12 +183,33 @@ public class HomeFragment extends Fragment implements MainContract.View {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(resiAdapter);
 
+        recyclerView.setVisibility(View.VISIBLE);
+        hideResi();
+    }
+
+    private void hideResi(){
         llMain.setVisibility(View.GONE);
         recyclerView.setVisibility(View.VISIBLE);
         recyclerViewHistory.setVisibility(View.GONE);
         floatingActionButton.setVisibility(View.GONE);
     }
 
+    public void saveResi(){
+        String label = cekResi.getDestination().getContact_name();
+        db.insert(label, cekResi.waybill_id, cekResi.getCourier().getCompany(), cekResi.getStatus());
+    }
+    private void showresidb(){
+        resiAdapterDB = new ResiAdapterDB(getActivity(), getContext(), v);
+        list = db.getResi();
+            resiAdapterDB.setList(list);
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+            recyclerViewdb.setLayoutManager(layoutManager);
+            recyclerViewdb.setAdapter(resiAdapterDB);
+            if (list.size() == 0){
+                lnresidb.setVisibility(View.GONE);
+        }
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -172,6 +221,7 @@ public class HomeFragment extends Fragment implements MainContract.View {
         if (loadng){
             llMain.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
+            lnresidb.setVisibility(View.GONE);
             recyclerViewHistory.setVisibility(View.GONE);
             floatingActionButton.setVisibility(View.GONE);
             progressBar.setProgress(progress);
@@ -185,6 +235,7 @@ public class HomeFragment extends Fragment implements MainContract.View {
         this.cekResi = data;
         if (cekResi != null){
             homeViewModel.getCekResi().setValue(cekResi);
+            saveResi();
             showResi();
         }
     }

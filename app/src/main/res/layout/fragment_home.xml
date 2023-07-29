@@ -138,6 +138,31 @@
             android:textSize="12sp" />
 
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible"
+        android:id="@+id/lnresidb"
+        app:layout_constraintTop_toBottomOf="@+id/LN1"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:text="Resi Tersimpan"
+            android:paddingTop="10dp"
+            />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvresidatadb"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            tools:ignore="MissingConstraints" />
+    </LinearLayout>
+
+
     <RelativeLayout
         android:id="@+id/activity_crear_entrenamiento"
         android:layout_width="match_parent"

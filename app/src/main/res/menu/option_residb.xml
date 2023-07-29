@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<item
+        android:id="@+id/btn_ubah"
+        android:icon="@drawable/ic_baseline_search_24"
+        android:title="Ubah"
+        app:showAsAction="always"
+        />
+
+    <item
+        android:id="@+id/btn_hapus"
+        android:icon="@drawable/ic_baseline_all_inbox_24"
+        app:showAsAction="always"
+        android:title="Hapus" />
+
+    <item
+        android:id="@+id/btn_cekresi"
+        android:icon="@drawable/ic_baseline_settings_24"
+        app:showAsAction="always"
+        android:title="Cek Resi" />
+</menu>

@@ -36,13 +36,13 @@ public class BitshipResi implements MainContract.Presenter{
 
     public BitshipResi(MainContract.View view){
         this.view = view;
-        endpoint = ApiService.getUrl("https://api.biteship.com/","1","")
+        endpoint = ApiService.getUrl("https://mocki.io/","1","")
                 .create(ApiEndpoint.class);
     }
 
     @Override
     public void getResi() {
-            endpoint.getResia(waybill, courier_code)
+            endpoint.getResia()//waybill, courier_code
                     .enqueue(new Callback<CekResi>() {
                         @Override
                         public void onResponse(Call<CekResi> call, Response<CekResi> response) {

@@ -21,7 +21,7 @@ public class SpinnerKurirAdapter extends BaseAdapter {
     public SpinnerKurirAdapter(Context context){
         this.context = context;
         this.flags = new int[]{R.drawable.icon_anteraja, R.drawable.icon_deliveree, R.drawable.icon_jt, R.drawable.icon_jne, R.drawable.icon_lalamove, R.drawable.icon_lion, R.drawable.icon_ninjaexpress, R.drawable.icon_paxel, R.drawable.icon_rpx, R.drawable.icon_sap, R.drawable.icon_sicepat, R.drawable.icon_tiki};
-        this.namaKurir = new String[]{"Antar Aja", "Deliveree", "JNT", "JNE Express", "Lala Move", "Lion", "Ninja Express", "Paxel", "RPX", "SAP", "SiCepat", "Tiki"};
+        this.namaKurir = new String[]{"Anter Aja", "Deliveree", "JNT", "JNE Express", "Lala Move", "Lion", "Ninja Express", "Paxel", "RPX", "SAP", "SiCepat", "Tiki"};
         this.kodeKurir = new String[]{"anteraja", "deliveree", "jnt", "jne", "lalamove", "lion", "ninja", "paxel", "rpx", "sap", "sicepat", "tiki"};
         inflter =(LayoutInflater.from(context));
     }

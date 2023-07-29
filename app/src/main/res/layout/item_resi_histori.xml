@@ -11,9 +11,9 @@
         android:id="@+id/cv_item_ongkir"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="4dp"
-        app:cardMaxElevation="4dp"
+        app:cardCornerRadius="3dp"
+        app:cardElevation="5dp"
+        app:cardMaxElevation="2dp"
         app:cardUseCompatPadding="true">
 
         <LinearLayout
@@ -22,6 +22,7 @@
             android:orientation="vertical"
             android:layout_marginTop= "10dp"
             android:layout_margin="5dp"
+            android:padding="10dp"
             >
             <LinearLayout
                 android:layout_width="match_parent"
