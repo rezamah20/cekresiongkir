@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -11,13 +12,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.checkapp.cekresiongkir.R;
@@ -25,6 +27,7 @@ import com.checkapp.cekresiongkir.database.DatabaseHandler;
 import com.checkapp.cekresiongkir.database.ResiModel;
 import com.checkapp.cekresiongkir.network.BitshipResi;
 import com.checkapp.cekresiongkir.network.MainContract;
+import com.checkapp.cekresiongkir.ui.home.DialogFragEditResi;
 
 import java.util.ArrayList;
 
@@ -46,11 +49,11 @@ public class ResiAdapterDB extends RecyclerView.Adapter<ResiAdapterDB.ResiDBView
     }
 
     public void setList(ArrayList<ResiModel> listResiDB){
-        if (listResiDB.size() > 0){
-            this.list.clear();
-        }
+        Log.d("ini json", "adapter = "+listResiDB.toString());
+        this.list.clear();
         this.list.addAll(listResiDB);
-        notifyDataSetChanged();
+        Log.d("ini json", "list = "+list);
+        this.notifyDataSetChanged();
     }
 
     @NonNull
@@ -63,13 +66,16 @@ public class ResiAdapterDB extends RecyclerView.Adapter<ResiAdapterDB.ResiDBView
     @Override
     public void onBindViewHolder(@NonNull ResiDBViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Log.d("ini json", "onBindViewHolder");
+
         String waybill = list.get(position).getResi();
         String kurirkode = list.get(position).getKurir();
+        String label = list.get(position).getLabel();
+        String status = list.get(position).getStatus();
 
 
-        holder.labeldb.setText(list.get(position).getLabel());
+        holder.labeldb.setText(label);
         holder.waybilldb.setText(waybill);
-        holder.statusdb.setText(list.get(position).getStatus());
+        holder.statusdb.setText(status);
         holder.kurirdb.setText(kurirkode);
 
         holder.cv_item_residb.setOnClickListener(new View.OnClickListener() {
@@ -86,7 +92,18 @@ public class ResiAdapterDB extends RecyclerView.Adapter<ResiAdapterDB.ResiDBView
                     public boolean onMenuItemClick(MenuItem menuItem) {
                         switch (menuItem.getItemId()){
                             case R.id.btn_ubah:
-                                Log.d("ini json", "btn_ubah");
+
+                                FragmentManager fm = ((AppCompatActivity) context).getSupportFragmentManager();
+                                DialogFragEditResi dialogFragment=new DialogFragEditResi(v);
+
+                                dialogFragment.show(fm,"Edit  Fragment");
+
+                                Bundle residata = new Bundle();
+                                residata.putString("label", label);
+                                residata.putString("waybill", waybill);
+                                residata.putString("kurirkode",kurirkode);
+                                residata.putString("status", status);
+                                dialogFragment.setArguments(residata);
 
                                 return true;
                             case R.id.btn_hapus:

@@ -21,12 +21,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.checkapp.cekresiongkir.Adapter.OngkirAdapter;
+import com.checkapp.cekresiongkir.database.ResiModel;
 import com.checkapp.cekresiongkir.databinding.FragmentDashboardBinding;
 import com.checkapp.cekresiongkir.network.Address;
 import com.checkapp.cekresiongkir.network.BitshipResi;
 import com.checkapp.cekresiongkir.network.MainContract;
 import com.checkapp.cekresiongkir.network.cekongkir.CekOngkir;
 import com.checkapp.cekresiongkir.network.cekresi.CekResi;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DashboardFragment extends Fragment implements MainContract.View {
 
@@ -202,6 +206,11 @@ public class DashboardFragment extends Fragment implements MainContract.View {
 
     @Override
     public void onErrorResi(CekResi data) {
+
+    }
+
+    @Override
+    public void onUpdateDB(ArrayList<ResiModel> resiModel) {
 
     }
 

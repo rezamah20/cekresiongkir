@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/MyDenseOutlined"
+            app:boxStrokeWidthFocused="100dp"
+            app:boxStrokeWidth="100dp"
+            app:boxStrokeColor="@color/black"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            app:hintEnabled="false"
+            android:padding="10dp"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editlabelresi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/mint_cream"
+                android:hint="Masukan Resi Disini"
+                tools:ignore="HardcodedText"
+                android:maxLines="1"
+                android:lines="1"
+                android:singleLine="true"
+
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/MyDenseOutlined"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            app:hintEnabled="false"
+            android:padding="10dp"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_waybill"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/gainsboro"
+                android:hint="Masukan Resi Disini"
+                tools:ignore="HardcodedText"
+                android:maxLines="1"
+                android:lines="1"
+                android:singleLine="true"
+                android:focusable="false"
+
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/MyDenseOutlined"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            app:hintEnabled="false"
+            android:padding="10dp"
+            android:inputType="textCapCharacters"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_kurirkode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/gainsboro"
+                android:hint="Masukan Resi Disini"
+                tools:ignore="HardcodedText"
+                android:maxLines="1"
+                android:lines="1"
+                android:singleLine="true"
+                android:focusable="false"
+                android:inputType="textCapCharacters"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/MyDenseOutlined"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            app:hintEnabled="false"
+            android:padding="10dp"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/gainsboro"
+                android:hint="Masukan Resi Disini"
+                tools:ignore="HardcodedText"
+                android:maxLines="1"
+                android:lines="1"
+                android:singleLine="true"
+                android:focusable="false"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop= "10dp"
+            android:layout_margin="5dp"
+            android:padding="10dp"
+            >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="left"
+                android:paddingEnd="5dp"
+
+                >
+                <Button
+                    android:id="@+id/btn_batal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="BATAL"
+                    android:backgroundTint="@color/black"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="left"
+                android:paddingStart="5dp"
+                >
+                <Button
+                    android:id="@+id/btn_simpan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Simpan"
+                    android:backgroundTint="@color/orange_red"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

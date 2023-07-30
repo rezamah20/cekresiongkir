@@ -42,6 +42,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class HomeFragment extends Fragment implements MainContract.View {
@@ -84,8 +85,6 @@ public class HomeFragment extends Fragment implements MainContract.View {
         lnresidb = binding.lnresidb;
         v = this;
         db = new DatabaseHandler(getContext());
-
-
 
 
         Spinner spinnerresi = binding.kurirDropdown;
@@ -201,7 +200,7 @@ public class HomeFragment extends Fragment implements MainContract.View {
     private void showresidb(){
         resiAdapterDB = new ResiAdapterDB(getActivity(), getContext(), v);
         list = db.getResi();
-            resiAdapterDB.setList(list);
+        resiAdapterDB.setList(list);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
             recyclerViewdb.setLayoutManager(layoutManager);
@@ -210,6 +209,11 @@ public class HomeFragment extends Fragment implements MainContract.View {
                 lnresidb.setVisibility(View.GONE);
         }
     }
+
+    public void onUpdate() {
+
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -254,6 +258,14 @@ public class HomeFragment extends Fragment implements MainContract.View {
     public void onErrorResi(CekResi cekResi) {
         homeViewModel.getCekResi().setValue(cekResi);
         showResierror();
+    }
+
+    @Override
+    public void onUpdateDB(ArrayList<ResiModel> resiModel) {
+        list.clear();
+        list = resiModel;
+        resiAdapterDB.setList(list);
+        Log.d("ini json", resiModel.toString());
     }
 
     @Override

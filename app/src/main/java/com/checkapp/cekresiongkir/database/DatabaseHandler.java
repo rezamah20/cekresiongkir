@@ -46,7 +46,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public ArrayList<ResiModel> getResi(){
         ArrayList <ResiModel> resiModelsArrayList = new ArrayList<>();
         String selectQuery = "SELECT * FROM " +table_resi;
-        SQLiteDatabase db =this.getWritableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);
 
         if (c.moveToFirst()){
@@ -82,9 +82,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         database.execSQL(query);
     }
 
-    public void update(String id, String label, String resi, String kurir, String status){
+    public void update( String label, String resi, String kurir, String status){
         SQLiteDatabase database = this.getWritableDatabase();
-        String query = "UPDATE "+table_resi+" SET "+key_label+" = '"+label+"',"+key_resi+" = '"+resi+"',"+key_kurir+" = '"+kurir+"',"+key_status+" = '"+status+"' WHERE " +key_id+ " = " +id;
+        String query = "UPDATE "+table_resi+" SET "+key_label+" = '"+label+"',"+key_resi+" = '"+resi+"',"+key_kurir+" = '"+kurir+"',"+key_status+" = '"+status+"' WHERE " +key_resi+ " = " +resi;
         database.execSQL(query);
+
     }
+
 }

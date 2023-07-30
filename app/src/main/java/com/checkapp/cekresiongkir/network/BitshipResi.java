@@ -1,34 +1,31 @@
 package com.checkapp.cekresiongkir.network;
 
 import com.checkapp.cekresiongkir.network.cekongkir.CekOngkir;
-import com.checkapp.cekresiongkir.network.cekongkir.PostKurir;
+import com.checkapp.cekresiongkir.network.cekresi.rajaongkir.CekResiRajaOngkir;
 import com.checkapp.cekresiongkir.network.cekresi.ApiEndpoint;
 import com.checkapp.cekresiongkir.network.cekresi.CekResi;
-import com.checkapp.cekresiongkir.network.cekresi.History;
 
-import java.util.ArrayList;
-import java.util.List;
 import android.os.Handler;
 import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONStringer;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class BitshipResi implements MainContract.Presenter{
     CekResi cekresi = new CekResi();
     CekOngkir cekOngkir = new CekOngkir();
     Address address = new Address();
 
-    ApiEndpoint endpoint;
+    ApiEndpoint.getBitship endpointbitship;
+    ApiEndpoint.getRajaOngkir endpointrajaongkir;
+
     MainContract.View view;
 
     String waybill = "";
@@ -36,13 +33,17 @@ public class BitshipResi implements MainContract.Presenter{
 
     public BitshipResi(MainContract.View view){
         this.view = view;
-        endpoint = ApiService.getUrl("https://mocki.io/","1","")
-                .create(ApiEndpoint.class);
+       // endpointbitship = ApiService.getUrlBiteship("https://mocki.io/","")
+         //          .create(ApiEndpoint.getBitship.class);
+        endpointbitship = ApiService.getInstance().getUrlBiteship()
+                .create(ApiEndpoint.getBitship.class);
+        endpointrajaongkir = ApiService.getInstance().getUrlRajaOngkir()
+                .create(ApiEndpoint.getRajaOngkir.class);
     }
 
     @Override
     public void getResi() {
-            endpoint.getResia()//waybill, courier_code
+        endpointbitship.getResia()//waybill, courier_code
                     .enqueue(new Callback<CekResi>() {
                         @Override
                         public void onResponse(Call<CekResi> call, Response<CekResi> response) {
@@ -96,7 +97,7 @@ public class BitshipResi implements MainContract.Presenter{
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),jsonObject.toString());
 
 
-        endpoint.getKurir(requestBody)
+        endpointbitship.getKurir(requestBody)
                 .enqueue(new Callback<CekOngkir>() {
                     @Override
                     public void onResponse(Call<CekOngkir> call, Response<CekOngkir> response) {
@@ -119,7 +120,7 @@ public class BitshipResi implements MainContract.Presenter{
     @Override
     public void getAddress(String add){
      //   Log.d("ini json address", "getaddress");
-        endpoint.getAddress(add,"single")
+        endpointbitship.getAddress(add,"single")
                 .enqueue(new Callback<Address>() {
                     @Override
                     public void onResponse(Call<Address> call, Response<Address> response) {
@@ -134,6 +135,25 @@ public class BitshipResi implements MainContract.Presenter{
 
                     }
                 });
+    }
+
+    @Override
+    public void getResiRajaOngkir() {
+           Log.d("ini json address", "getResiRajaOngkir");
+        endpointrajaongkir.getResiRajaOngkir("10007276206862", "anteraja")
+                .enqueue(new Callback<CekResiRajaOngkir>() {
+                    @Override
+                    public void onResponse(Call<CekResiRajaOngkir> call, Response<CekResiRajaOngkir> response) {
+                        Log.d("ini json", String.valueOf(response.body()));
+                    }
+
+                    @Override
+                    public void onFailure(Call<CekResiRajaOngkir> call, Throwable t) {
+                        Log.d("ini json", String.valueOf(t));
+
+                    }
+                });
+
     }
 
     @Override
@@ -153,4 +173,6 @@ public class BitshipResi implements MainContract.Presenter{
             }
         }, 4000);
     }
+
+
 }
