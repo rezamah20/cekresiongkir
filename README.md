@@ -1,4 +1,4 @@
-Cek Resi dan Ongkir menggunakan API BiteShip
+Cek Resi dan Ongkir menggunakan API RajaOngkir dan Backup API BiteShip
 
 Library
 - Retrofit
