@@ -37,8 +37,6 @@ public class OngkirAdapter extends RecyclerView.Adapter<OngkirAdapter.OngkirView
     @Override
     public void onBindViewHolder(@NonNull OngkirViewHolder holder, int position) {
 
-        Log.d("ini json", String.valueOf(cekOngkir.getPricing().size()));
-
         holder.namaexpedisi.setText(cekOngkir.getPricing().get(position).getCourier_name());
         holder.deskripsi.setText(cekOngkir.getPricing().get(position).getCourier_service_name());
         holder.kode_layanan.setText(cekOngkir.getPricing().get(position).getCourier_service_code());

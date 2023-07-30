@@ -67,12 +67,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor c = database.rawQuery("SELECT * FROM " + table_resi+ " WHERE " +key_resi+ " = " +resi, null);
         boolean exist = (c.getCount() > 0);
-      //  if (exist){
+        if (exist){
             Log.d("ini json", "resi sudah ada");
-      //  }else {
+        }else {
             String query = "INSERT INTO " +table_resi+"("+key_label+","+key_resi+","+key_kurir+","+key_status+")VALUES('"+label+"','"+resi+"','"+kurir+"','"+status+"')";
             database.execSQL(query);
-      //  }
+        }
     }
 
     public void delete(String id){

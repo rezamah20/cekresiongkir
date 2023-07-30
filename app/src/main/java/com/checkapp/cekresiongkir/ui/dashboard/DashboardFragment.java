@@ -28,6 +28,7 @@ import com.checkapp.cekresiongkir.network.BitshipResi;
 import com.checkapp.cekresiongkir.network.MainContract;
 import com.checkapp.cekresiongkir.network.cekongkir.CekOngkir;
 import com.checkapp.cekresiongkir.network.cekresi.CekResi;
+import com.checkapp.cekresiongkir.network.cekresi.rajaongkir.CekResiRajaOngkir;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -182,7 +183,7 @@ public class DashboardFragment extends Fragment implements MainContract.View {
     }
 
     @Override
-    public void onResultResi(CekResi data) {
+    public void onResultResi(CekResi data, CekResiRajaOngkir cekResiRajaOngkir) {
     }
 
     @Override

@@ -14,7 +14,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -38,11 +37,11 @@ import com.checkapp.cekresiongkir.network.BitshipResi;
 import com.checkapp.cekresiongkir.network.MainContract;
 import com.checkapp.cekresiongkir.network.cekongkir.CekOngkir;
 import com.checkapp.cekresiongkir.network.cekresi.CekResi;
+import com.checkapp.cekresiongkir.network.cekresi.rajaongkir.CekResiRajaOngkir;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class HomeFragment extends Fragment implements MainContract.View {
@@ -58,6 +57,7 @@ public class HomeFragment extends Fragment implements MainContract.View {
     private BitshipResi presenter;
     private Button cekresi;
     private CekResi cekResi;
+    private CekResiRajaOngkir cekResiRajaOngkir;
     private ProgressBar progressBar;
     private LinearLayout llMain;
     private LinearLayout lnresidb;
@@ -66,7 +66,7 @@ public class HomeFragment extends Fragment implements MainContract.View {
     private ArrayList<ResiModel> list;
     private MainContract.View v;
     TextInputEditText txt;
-    String kodeKurir;
+    String kodeKurir, label, company, status;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -88,7 +88,7 @@ public class HomeFragment extends Fragment implements MainContract.View {
 
 
         Spinner spinnerresi = binding.kurirDropdown;
-        ArrayAdapter<String> spinnerresiadapter = new ArrayAdapter<String>(getContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, getResources().getStringArray(R.array.resikurir_array));
+        ArrayAdapter<String> spinnerresiadapter = new ArrayAdapter<>(getContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, getResources().getStringArray(R.array.resikurir_array));
         spinnerresiadapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
 
         showResi();
@@ -145,39 +145,52 @@ public class HomeFragment extends Fragment implements MainContract.View {
 
 
     private void showResi(){
-        if (homeViewModel.getCekResi().getValue() != null){
-            Log.d("ini json", "cek resi");
+
+        if (homeViewModel.getCekResiRajaOngkir().getValue() != null) {
+            homeViewModel.getCekResiRajaOngkir().observe(getViewLifecycleOwner(), new Observer<CekResiRajaOngkir>() {
+                @Override
+                public void onChanged(CekResiRajaOngkir cekResiRajaOngkir) {
+                    resiAdapter = new ResiAdapter(getActivity(), getContext(), cekResi, cekResiRajaOngkir);
+                    resiHistoryAdapter = new ResiHistoryAdapter(getActivity(), getContext(), cekResi, cekResiRajaOngkir);
+                    showResiadapter();
+                }
+            });
+        }else if (homeViewModel.getCekResi().getValue() != null){
             homeViewModel.getCekResi().observe(getViewLifecycleOwner(), new Observer<CekResi>() {
                 @Override
                 public void onChanged(CekResi cekResi) {
-                    if (cekResi != null) {
-                        resiAdapter = new ResiAdapter(getActivity(), getContext(), cekResi);
-                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-                        recyclerView.setLayoutManager(layoutManager);
-                        recyclerView.setAdapter(resiAdapter);
-                        resiAdapter.notifyDataSetChanged();
-
-                        //resihistoryadapter
-                        resiHistoryAdapter = new ResiHistoryAdapter(getActivity(), getContext(), cekResi);
-                        RecyclerView.LayoutManager layoutManager2 = new LinearLayoutManager(getContext());
-                        recyclerViewHistory.setLayoutManager(layoutManager2);
-                        recyclerViewHistory.setAdapter(resiHistoryAdapter);
-                        resiHistoryAdapter.notifyDataSetChanged();
-
-
-                        lnresidb.setVisibility(View.GONE);
-                        llMain.setVisibility(View.GONE);
-                        recyclerView.setVisibility(View.VISIBLE);
-                        recyclerViewHistory.setVisibility(View.VISIBLE);
-                        floatingActionButton.setVisibility(View.VISIBLE);
-                    }
+                    Log.d("ini json", "Data = "+cekResi);
+                    resiAdapter = new ResiAdapter(getActivity(), getContext(), cekResi, cekResiRajaOngkir);
+                    resiHistoryAdapter = new ResiHistoryAdapter(getActivity(), getContext(), cekResi, cekResiRajaOngkir);
+                    showResiadapter();
                 }
             });
         }
+
+    }
+
+    public void showResiadapter(){
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(resiAdapter);
+        resiAdapter.notifyDataSetChanged();
+
+
+        RecyclerView.LayoutManager layoutManager2 = new LinearLayoutManager(getContext());
+        recyclerViewHistory.setLayoutManager(layoutManager2);
+        recyclerViewHistory.setAdapter(resiHistoryAdapter);
+        resiHistoryAdapter.notifyDataSetChanged();
+
+
+        lnresidb.setVisibility(View.GONE);
+        llMain.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
+        recyclerViewHistory.setVisibility(View.VISIBLE);
+        floatingActionButton.setVisibility(View.VISIBLE);
     }
 
     public void showResierror(){
-        resiAdapter = new ResiAdapter(getActivity(), getContext(), cekResi);
+        resiAdapter = new ResiAdapter(getActivity(), getContext(), cekResi, cekResiRajaOngkir);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(resiAdapter);
@@ -194,8 +207,7 @@ public class HomeFragment extends Fragment implements MainContract.View {
     }
 
     public void saveResi(){
-        String label = cekResi.getDestination().getContact_name();
-        db.insert(label, cekResi.waybill_id, cekResi.getCourier().getCompany(), cekResi.getStatus());
+        db.insert(label, cekResi.waybill_id, company, status);
     }
     private void showresidb(){
         resiAdapterDB = new ResiAdapterDB(getActivity(), getContext(), v);
@@ -208,10 +220,6 @@ public class HomeFragment extends Fragment implements MainContract.View {
             if (list.size() == 0){
                 lnresidb.setVisibility(View.GONE);
         }
-    }
-
-    public void onUpdate() {
-
     }
 
     @Override
@@ -235,13 +243,30 @@ public class HomeFragment extends Fragment implements MainContract.View {
     }
 
     @Override
-    public void onResultResi(CekResi data) {
+    public void onResultResi(CekResi data, CekResiRajaOngkir cekResiRajaOngkir) {
         this.cekResi = data;
-        if (cekResi != null){
+        this.cekResiRajaOngkir = cekResiRajaOngkir;
+
+        if (cekResiRajaOngkir.getRajaongkir() != null){
+            homeViewModel.getCekResi().setValue(null);
+            label = cekResiRajaOngkir.getRajaongkir().getResult().getSummary().getReceiver_name();
+            company = cekResiRajaOngkir.getRajaongkir().getResult().getSummary().getCourier_name();
+            status = cekResiRajaOngkir.getRajaongkir().getResult().getSummary().getStatus();
+            status = cekResi.getStatus();
+            homeViewModel.getCekResiRajaOngkir().setValue(cekResiRajaOngkir);
+
+            showResi();
+        }else{
+            homeViewModel.getCekResiRajaOngkir().setValue(null);
+            label = cekResi.getDestination().getContact_name();
+            company = cekResi.getCourier().getCompany();
+            status = cekResi.getStatus();
             homeViewModel.getCekResi().setValue(cekResi);
-            saveResi();
+
             showResi();
         }
+        saveResi();
+
     }
 
     @Override

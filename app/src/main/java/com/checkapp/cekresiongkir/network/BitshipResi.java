@@ -20,6 +20,7 @@ import retrofit2.Response;
 
 public class BitshipResi implements MainContract.Presenter{
     CekResi cekresi = new CekResi();
+    CekResiRajaOngkir cekResiRajaOngkir = new CekResiRajaOngkir();
     CekOngkir cekOngkir = new CekOngkir();
     Address address = new Address();
 
@@ -50,7 +51,6 @@ public class BitshipResi implements MainContract.Presenter{
                             cekresi = response.body();
                             if(response.body() == null){
                                 view.onErrorResi(null);
-                                 Log.d("ini json", "null");
                                 //   view.showMessage("Data Tidak Di temukan");
                             }
 
@@ -125,7 +125,6 @@ public class BitshipResi implements MainContract.Presenter{
                     @Override
                     public void onResponse(Call<Address> call, Response<Address> response) {
                         address = response.body();
-
                         view.onResultSearch(address);
 
                     }
@@ -139,17 +138,23 @@ public class BitshipResi implements MainContract.Presenter{
 
     @Override
     public void getResiRajaOngkir() {
-           Log.d("ini json address", "getResiRajaOngkir");
         endpointrajaongkir.getResiRajaOngkir("10007276206862", "anteraja")
                 .enqueue(new Callback<CekResiRajaOngkir>() {
                     @Override
                     public void onResponse(Call<CekResiRajaOngkir> call, Response<CekResiRajaOngkir> response) {
-                        Log.d("ini json", String.valueOf(response.body()));
+
+                        if (response.raw().code() != 200){
+                            getResi();
+                            Log.d("ini json", "Resi Tidak Ditemukan");
+                        }else {
+                            cekResiRajaOngkir = response.body();
+                        }
+
                     }
 
                     @Override
                     public void onFailure(Call<CekResiRajaOngkir> call, Throwable t) {
-                        Log.d("ini json", String.valueOf(t));
+                        Log.d("ini json onFailure", String.valueOf(t));
 
                     }
                 });
@@ -162,14 +167,13 @@ public class BitshipResi implements MainContract.Presenter{
         this.courier_code = courier_codea;
 
         view.onLoadingResi(true, 25);
-
-        getResi();
+        getResiRajaOngkir();
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 view.onLoadingResi(false, 100);
-                view.onResultResi(cekresi);
+                view.onResultResi(cekresi, cekResiRajaOngkir);
             }
         }, 4000);
     }

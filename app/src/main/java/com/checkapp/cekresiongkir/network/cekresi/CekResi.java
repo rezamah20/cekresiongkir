@@ -3,6 +3,7 @@ package com.checkapp.cekresiongkir.network.cekresi;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CekResi implements Serializable {
@@ -152,7 +153,7 @@ public class CekResi implements Serializable {
         return history;
     }
 
-    public void setHistory(List<History> history) {
+    public void setHistory(ArrayList<History> history) {
         this.history = history;
     }
 /*

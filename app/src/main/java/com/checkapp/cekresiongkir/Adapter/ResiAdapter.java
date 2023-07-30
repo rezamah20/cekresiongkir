@@ -16,6 +16,7 @@ import com.checkapp.cekresiongkir.R;
 import com.checkapp.cekresiongkir.network.BitshipResi;
 import com.checkapp.cekresiongkir.network.cekresi.CekResi;
 import com.checkapp.cekresiongkir.network.cekresi.History;
+import com.checkapp.cekresiongkir.network.cekresi.rajaongkir.CekResiRajaOngkir;
 
 import java.util.List;
 
@@ -23,12 +24,13 @@ public class ResiAdapter extends RecyclerView.Adapter<ResiAdapter.ResiViewHolder
     Activity activity;
     Context context;
     CekResi data;
-    List<String> history;
+    CekResiRajaOngkir cekResiRajaOngkir;
 
-    public ResiAdapter(Activity activity, Context context, CekResi data){
+    public ResiAdapter(Activity activity, Context context, CekResi data, CekResiRajaOngkir cekResiRajaOngkir){
         this.activity = activity;
         this.context = context;
         this.data = data;
+        this.cekResiRajaOngkir = cekResiRajaOngkir;
     }
 
     @NonNull
@@ -40,8 +42,18 @@ public class ResiAdapter extends RecyclerView.Adapter<ResiAdapter.ResiViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ResiViewHolder holder, int position) {
-       // Log.d("ini json", "cek resi");
-        if (data != null) {
+
+
+        if (cekResiRajaOngkir.getRajaongkir() != null){
+            holder.waybill.setText(cekResiRajaOngkir.getRajaongkir().getQuery().waybill);
+            holder.status.setText(cekResiRajaOngkir.getRajaongkir().getResult().getSummary().getStatus());
+            holder.tujuan.setText(cekResiRajaOngkir.getRajaongkir().getResult().getSummary().getReceiver_name());
+            holder.kurir.setText(cekResiRajaOngkir.getRajaongkir().getResult().getSummary().getCourier_name());
+            holder.terahkirupdate.setText(cekResiRajaOngkir.getRajaongkir().getResult().getManifest().get(0).getManifest_date()+" "+cekResiRajaOngkir.getRajaongkir().getResult().getManifest().get(0).getManifest_time());
+            holder.resiada.setVisibility(View.VISIBLE);
+            holder.resitidakada.setVisibility(View.GONE);
+
+        } else if (data != null) {
             holder.waybill.setText(data.getWaybill_id());
             holder.status.setText(data.getStatus());
             holder.tujuan.setText(data.getDestination().getContact_name());
@@ -49,10 +61,9 @@ public class ResiAdapter extends RecyclerView.Adapter<ResiAdapter.ResiViewHolder
             holder.terahkirupdate.setText(data.getHistory().get(data.getHistory().size() - 1).getUpdated_at());
             holder.resiada.setVisibility(View.VISIBLE);
             holder.resitidakada.setVisibility(View.GONE);
-           // Log.d("ini json", "Resi di temukan");
 
         }else {
-          //  Log.d("ini json", "Resi Tidak Di temukan");
+           // Log.d("ini json", "Resi Tidak Di temukan = "+data);
             holder.resiada.setVisibility(View.GONE);
             holder.resitidakada.setVisibility(View.VISIBLE);
             holder.statusresi.setText("Resi Tidak Di temukan");

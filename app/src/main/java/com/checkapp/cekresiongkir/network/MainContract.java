@@ -4,6 +4,7 @@ import com.checkapp.cekresiongkir.database.ResiModel;
 import com.checkapp.cekresiongkir.network.cekongkir.CekOngkir;
 import com.checkapp.cekresiongkir.network.cekresi.CekResi;
 import com.checkapp.cekresiongkir.network.cekresi.History;
+import com.checkapp.cekresiongkir.network.cekresi.rajaongkir.CekResiRajaOngkir;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ public interface MainContract {
 
     interface View{
         void onLoadingResi(boolean loadng, int progress);
-        void onResultResi(CekResi data);
+        void onResultResi(CekResi data, CekResiRajaOngkir cekResiRajaOngkir);
         void onResultSearch(Address data);
         void onResultOngkir(CekOngkir data);
         void onErrorResi(CekResi data);

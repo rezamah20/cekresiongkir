@@ -1,6 +1,7 @@
 package com.checkapp.cekresiongkir.ui.notifications;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.checkapp.cekresiongkir.network.BitshipResi;
 import com.checkapp.cekresiongkir.network.MainContract;
 import com.checkapp.cekresiongkir.network.cekongkir.CekOngkir;
 import com.checkapp.cekresiongkir.network.cekresi.CekResi;
+import com.checkapp.cekresiongkir.network.cekresi.rajaongkir.CekResiRajaOngkir;
 
 import java.util.ArrayList;
 
@@ -38,7 +40,7 @@ public class NotificationsFragment extends Fragment implements MainContract.View
         v = this;
 
         presenter = new BitshipResi(v);
-        presenter.getResiRajaOngkir();
+        presenter.setupENV("1","1");
 
 
         final TextView textView = binding.textNotifications;
@@ -58,7 +60,8 @@ public class NotificationsFragment extends Fragment implements MainContract.View
     }
 
     @Override
-    public void onResultResi(CekResi data) {
+    public void onResultResi(CekResi data, CekResiRajaOngkir cekResiRajaOngkir) {
+        Log.d("ini json", "onResultResi = "+data);
 
     }
 

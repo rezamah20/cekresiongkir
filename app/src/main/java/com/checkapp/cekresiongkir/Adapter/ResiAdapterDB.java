@@ -49,10 +49,8 @@ public class ResiAdapterDB extends RecyclerView.Adapter<ResiAdapterDB.ResiDBView
     }
 
     public void setList(ArrayList<ResiModel> listResiDB){
-        Log.d("ini json", "adapter = "+listResiDB.toString());
         this.list.clear();
         this.list.addAll(listResiDB);
-        Log.d("ini json", "list = "+list);
         this.notifyDataSetChanged();
     }
 
@@ -65,7 +63,6 @@ public class ResiAdapterDB extends RecyclerView.Adapter<ResiAdapterDB.ResiDBView
 
     @Override
     public void onBindViewHolder(@NonNull ResiDBViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        Log.d("ini json", "onBindViewHolder");
 
         String waybill = list.get(position).getResi();
         String kurirkode = list.get(position).getKurir();
