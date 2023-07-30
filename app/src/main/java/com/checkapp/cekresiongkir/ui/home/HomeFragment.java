@@ -252,7 +252,6 @@ public class HomeFragment extends Fragment implements MainContract.View {
             label = cekResiRajaOngkir.getRajaongkir().getResult().getSummary().getReceiver_name();
             company = cekResiRajaOngkir.getRajaongkir().getResult().getSummary().getCourier_name();
             status = cekResiRajaOngkir.getRajaongkir().getResult().getSummary().getStatus();
-            status = cekResi.getStatus();
             homeViewModel.getCekResiRajaOngkir().setValue(cekResiRajaOngkir);
 
             showResi();
