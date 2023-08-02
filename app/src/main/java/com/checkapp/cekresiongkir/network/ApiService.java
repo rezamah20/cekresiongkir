@@ -21,8 +21,8 @@ public class ApiService {
 
     public static ApiService apiService;
 
-    private final static String BASE_URL = "https://mocki.io/";
-    private final static String API_KEY = "https://mocki.io/";
+    private final static String BASE_URL = "https://api.biteship.com/";
+    private final static String API_KEY = "";
 
 
     private final static String BASE_URL2 = "https://pro.rajaongkir.com/api/";
@@ -73,11 +73,10 @@ public class ApiService {
     }
 
     public Retrofit getUrlRajaOngkir(Context context){
-        Log.d("ini json", "null");
 
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
-        builder.readTimeout(10, TimeUnit.SECONDS);
-        builder.connectTimeout(30, TimeUnit.SECONDS);
+        builder.readTimeout(100, TimeUnit.SECONDS);
+        builder.connectTimeout(100, TimeUnit.SECONDS);
 
         builder.addInterceptor(chain -> {
             Request request = chain.request().newBuilder()
@@ -93,7 +92,6 @@ public class ApiService {
                     .baseUrl(BASE_URL2)
                     .client(client)
                     .addConverterFactory(GsonConverterFactory.create())
-                    //.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .build();
         }
         return  retrofit2;

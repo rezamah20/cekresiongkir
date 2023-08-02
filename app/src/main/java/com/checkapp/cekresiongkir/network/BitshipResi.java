@@ -1,16 +1,24 @@
 package com.checkapp.cekresiongkir.network;
 
 import com.checkapp.cekresiongkir.network.cekongkir.CekOngkir;
+import com.checkapp.cekresiongkir.network.cekongkir.rajaongkir.CekOngkirRaja;
+import com.checkapp.cekresiongkir.network.cekongkir.rajaongkir.CekOngkirRajaModel;
+import com.checkapp.cekresiongkir.network.cekongkir.rajaongkir.RajaOngkirCity;
 import com.checkapp.cekresiongkir.network.cekresi.rajaongkir.CekResiRajaOngkir;
 import com.checkapp.cekresiongkir.network.cekresi.ApiEndpoint;
 import com.checkapp.cekresiongkir.network.cekresi.CekResi;
 
+import android.database.Cursor;
 import android.os.Handler;
 import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -23,19 +31,29 @@ public class BitshipResi implements MainContract.Presenter{
     CekResiRajaOngkir cekResiRajaOngkir = new CekResiRajaOngkir();
     CekOngkir cekOngkir = new CekOngkir();
     Address address = new Address();
+    RajaOngkirCity rajaOngkirCity = new RajaOngkirCity();
+    CekOngkirRaja cekOngkirRaja = new CekOngkirRaja();
+    ArrayList<CekOngkirRajaModel> cekOngkirRajaModelsArray = new ArrayList<>();
+
 
     ApiEndpoint.getBitship endpointbitship;
     ApiEndpoint.getRajaOngkir endpointrajaongkir;
 
     MainContract.View view;
+    MainContract.MainView MainView;
+
 
     String waybill = "";
     String courier_code;
+    String originid;
+    String destinationid;
+    String originpostal;
+    String destinationpostal;
+    String weight;
 
-    public BitshipResi(MainContract.View view){
-        this.view = view;
-       // endpointbitship = ApiService.getUrlBiteship("https://mocki.io/","")
-         //          .create(ApiEndpoint.getBitship.class);
+    public BitshipResi(MainContract.MainView view, MainContract.View v){
+        this.MainView = view;
+        this.view = v;
         endpointbitship = ApiService.getInstance().getUrlBiteship()
                 .create(ApiEndpoint.getBitship.class);
         endpointrajaongkir = ApiService.getInstance().getUrlRajaOngkir()
@@ -50,7 +68,7 @@ public class BitshipResi implements MainContract.Presenter{
                         public void onResponse(Call<CekResi> call, Response<CekResi> response) {
                             cekresi = response.body();
                             if(response.body() == null){
-                                view.onErrorResi(null);
+                                MainView.onErrorResi(null);
                                 //   view.showMessage("Data Tidak Di temukan");
                             }
 
@@ -59,7 +77,7 @@ public class BitshipResi implements MainContract.Presenter{
                         @Override
                         public void onFailure(Call<CekResi> call, Throwable t) {
                             t.getMessage();
-                            view.onErrorResi(null);
+                            MainView.onErrorResi(null);
                           //  Log.d("ini json", "null");
 
                         }
@@ -68,8 +86,8 @@ public class BitshipResi implements MainContract.Presenter{
     }
 
     @Override
-    public void getKurir(String originid, String destiid, String berat) {
-
+    public void getKurir() {
+        Log.d("ini json", "getKurir");
         JSONObject jsonObject = new JSONObject();
         JSONArray array = new JSONArray();
         try {
@@ -80,38 +98,36 @@ public class BitshipResi implements MainContract.Presenter{
             internalObject.put("length",30);
             internalObject.put("width",15);
             internalObject.put("height",30);
-            internalObject.put("weight",berat);
+            internalObject.put("weight",weight);
             internalObject.put("quantity",1);
             array.put(internalObject);
 
-            jsonObject.put("origin_area_id", originid);
-            jsonObject.put("destination_area_id", destiid);
-            jsonObject.put("couriers", "jnt,jne,anteraja");
+            jsonObject.put("origin_postal_code", originpostal);
+            jsonObject.put("destination_postal_code", destinationpostal);
+            jsonObject.put("couriers", "jnt,jne,anteraja,deliveree,tiki,ninja,lion,sicepat,idexpress,rpx,pos,sap,paxel,lalamove");
             jsonObject.put("items", array);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
         String jsonStr = jsonObject.toString();
-        Log.d("ini json respon", jsonStr);
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),jsonObject.toString());
-
 
         endpointbitship.getKurir(requestBody)
                 .enqueue(new Callback<CekOngkir>() {
                     @Override
                     public void onResponse(Call<CekOngkir> call, Response<CekOngkir> response) {
                         cekOngkir = response.body();
-
-                       // Log.d("ini json respon", String.valueOf(response.body()));
-
-                        view.onResultOngkir(cekOngkir);
+                        if (cekOngkir != null) {
+                            view.onResultOngkir(cekOngkirRajaModelsArray, cekOngkirRaja, cekOngkir);
+                        }else {
+                            view.onErrorOngkir(cekOngkir);
+                        }
                     }
 
                     @Override
                     public void onFailure(Call<CekOngkir> call, Throwable t) {
-                        t.getMessage();
-                        Log.d("ini json failed", String.valueOf(t));
+                        view.onErrorOngkir(cekOngkir);
                     }
 
                 });
@@ -162,20 +178,95 @@ public class BitshipResi implements MainContract.Presenter{
     }
 
     @Override
+    public void getCityRaja() {
+        endpointrajaongkir.getSearchCityRaja().enqueue(new Callback<RajaOngkirCity>() {
+            @Override
+            public void onResponse(Call<RajaOngkirCity> call, Response<RajaOngkirCity> response) {
+                rajaOngkirCity = response.body();
+                if (rajaOngkirCity != null) {
+                    view.onResultSearchRaja(rajaOngkirCity.getRajaongkirCekCity().results);
+                }else {
+                    getCityRaja();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RajaOngkirCity> call, Throwable t) {
+                getCityRaja();
+            }
+        });
+
+    }
+
+    @Override
+    public void getOngkirRaja() {
+            String courier = "jne:pos:tiki:rpx:wahana:sicepat:jnt:sap:dse:ncs:ninja:lion:rex:ide:sentral:anteraja:pahala:first:jtl";
+            endpointrajaongkir.getOngkirRaja(originid, "citya", destinationid, "citya", weight, courier)
+                    .enqueue(new Callback<CekOngkirRaja>() {
+                @Override
+                public void onResponse(Call<CekOngkirRaja> call, Response<CekOngkirRaja> response) {
+
+                    cekOngkirRaja = response.body();
+                    if (cekOngkirRaja != null) {
+                        ArrayList<CekOngkirRaja.RajaOngkirCost.Results> kurir = new ArrayList<>();
+                        kurir.addAll(cekOngkirRaja.getRajaongkir().getResults());
+
+                        for (int i = 0; i < kurir.size(); i++) {
+                            for (int ii = 0; ii < kurir.get(i).getCosts().size(); ii++) {
+                                CekOngkirRajaModel cekOngkirRajaModels = new CekOngkirRajaModel();
+                                cekOngkirRajaModels.setDeskripsi(kurir.get(i).getCosts().get(ii).description);
+                                for (int iii = 0; iii < kurir.get(i).getCosts().get(ii).getCost().size(); iii++) {
+                                    cekOngkirRajaModels.setKodelayanan(kurir.get(i).getCosts().get(ii).service);
+                                    cekOngkirRajaModels.setDurasi(kurir.get(i).getCosts().get(ii).getCost().get(iii).etd);
+                                    cekOngkirRajaModels.setCodekurir(kurir.get(i).getCode());
+                                    cekOngkirRajaModels.setHargakurir(kurir.get(i).getCosts().get(ii).getCost().get(iii).value);
+                                    cekOngkirRajaModelsArray.add(cekOngkirRajaModels);
+                                }
+                            }
+                        }
+                        view.onLoadingOngki(false, 100);
+                        view.onResultOngkir(cekOngkirRajaModelsArray, cekOngkirRaja, cekOngkir);
+                    }else {
+                        getKurir();
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<CekOngkirRaja> call, Throwable t) {
+                    getKurir();
+                }
+            });
+    }
+
+    @Override
     public void setupENV(String waybill_id, String courier_codea) {
         this.waybill = waybill_id;
         this.courier_code = courier_codea;
 
-        view.onLoadingResi(true, 25);
+        MainView.onLoadingResi(true, 25);
         getResiRajaOngkir();
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                view.onLoadingResi(false, 100);
-                view.onResultResi(cekresi, cekResiRajaOngkir);
+                MainView.onLoadingResi(false, 100);
+                MainView.onResultResi(cekresi, cekResiRajaOngkir);
             }
         }, 4000);
+    }
+
+    @Override
+    public void setupOKR(String originid, String destinationid, String originpostal, String destinationpostal, String weight) {
+        this.originid = originid;
+        this.destinationid = destinationid;
+        this.originpostal = originpostal;
+        this.destinationpostal = destinationpostal;
+        this.weight = weight;
+
+        view.onLoadingOngki(true, 25);
+        getOngkirRaja();
+
     }
 
 

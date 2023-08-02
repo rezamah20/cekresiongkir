@@ -25,10 +25,10 @@ public class DialogFragEditResi extends DialogFragment implements MainContract.P
     private TextInputEditText label, waybill, kurirkode, status;
     private Button batal, simpan;
     private DatabaseHandler db;
-    MainContract.View v;
+    MainContract.MainView v;
 
 
-    public DialogFragEditResi(MainContract.View view){
+    public DialogFragEditResi(MainContract.MainView view){
         this.v = view;
     }
     @Nullable

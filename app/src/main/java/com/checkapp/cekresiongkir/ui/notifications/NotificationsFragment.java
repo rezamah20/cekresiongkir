@@ -17,12 +17,16 @@ import com.checkapp.cekresiongkir.network.Address;
 import com.checkapp.cekresiongkir.network.BitshipResi;
 import com.checkapp.cekresiongkir.network.MainContract;
 import com.checkapp.cekresiongkir.network.cekongkir.CekOngkir;
+import com.checkapp.cekresiongkir.network.cekongkir.rajaongkir.CekOngkirRaja;
+import com.checkapp.cekresiongkir.network.cekongkir.rajaongkir.CekOngkirRajaModel;
+import com.checkapp.cekresiongkir.network.cekongkir.rajaongkir.RajaOngkirCity;
 import com.checkapp.cekresiongkir.network.cekresi.CekResi;
 import com.checkapp.cekresiongkir.network.cekresi.rajaongkir.CekResiRajaOngkir;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class NotificationsFragment extends Fragment implements MainContract.View{
+public class NotificationsFragment extends Fragment{
 
     private FragmentNotificationsBinding binding;
     private BitshipResi presenter;
@@ -37,10 +41,8 @@ public class NotificationsFragment extends Fragment implements MainContract.View
         binding = FragmentNotificationsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        v = this;
 
-        presenter = new BitshipResi(v);
-        presenter.setupENV("1","1");
+        //presenter.getOngkirRaja();
 
 
         final TextView textView = binding.textNotifications;
@@ -54,49 +56,4 @@ public class NotificationsFragment extends Fragment implements MainContract.View
         binding = null;
     }
 
-    @Override
-    public void onLoadingResi(boolean loadng, int progress) {
-
-    }
-
-    @Override
-    public void onResultResi(CekResi data, CekResiRajaOngkir cekResiRajaOngkir) {
-        Log.d("ini json", "onResultResi = "+data);
-
-    }
-
-    @Override
-    public void onResultSearch(Address data) {
-
-    }
-
-    @Override
-    public void onResultOngkir(CekOngkir data) {
-
-    }
-
-    @Override
-    public void onErrorResi(CekResi data) {
-
-    }
-
-    @Override
-    public void onUpdateDB(ArrayList<ResiModel> resiModel) {
-
-    }
-
-    @Override
-    public void showMessage(String msg) {
-
-    }
-
-    @Override
-    public String getOrigin() {
-        return null;
-    }
-
-    @Override
-    public String getDestination() {
-        return null;
-    }
 }

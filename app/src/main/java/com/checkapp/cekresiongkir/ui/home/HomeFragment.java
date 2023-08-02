@@ -36,15 +36,19 @@ import com.checkapp.cekresiongkir.network.Address;
 import com.checkapp.cekresiongkir.network.BitshipResi;
 import com.checkapp.cekresiongkir.network.MainContract;
 import com.checkapp.cekresiongkir.network.cekongkir.CekOngkir;
+import com.checkapp.cekresiongkir.network.cekongkir.rajaongkir.CekOngkirRaja;
+import com.checkapp.cekresiongkir.network.cekongkir.rajaongkir.CekOngkirRajaModel;
+import com.checkapp.cekresiongkir.network.cekongkir.rajaongkir.RajaOngkirCity;
 import com.checkapp.cekresiongkir.network.cekresi.CekResi;
 import com.checkapp.cekresiongkir.network.cekresi.rajaongkir.CekResiRajaOngkir;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
-public class HomeFragment extends Fragment implements MainContract.View {
+public class HomeFragment extends Fragment implements MainContract.MainView {
 
     private HomeViewModel homeViewModel;
     private FragmentHomeBinding binding;
@@ -65,8 +69,9 @@ public class HomeFragment extends Fragment implements MainContract.View {
     private DatabaseHandler db;
     private ArrayList<ResiModel> list;
     private MainContract.View v;
+    private MainContract.MainView mainView;
     TextInputEditText txt;
-    String kodeKurir, label, company, status;
+    String kodeKurir, label, waybill, company, status;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -83,7 +88,7 @@ public class HomeFragment extends Fragment implements MainContract.View {
         cekresi = binding.btnCekresi;
         llMain = binding.llMain;
         lnresidb = binding.lnresidb;
-        v = this;
+        mainView = this;
         db = new DatabaseHandler(getContext());
 
 
@@ -134,7 +139,7 @@ public class HomeFragment extends Fragment implements MainContract.View {
                 if (String.valueOf(txt.getText()).equals("")){
                     Toast.makeText(getContext(), "Nomor Resi tidak boleh kosong", Toast.LENGTH_LONG).show();
                 }else {
-                    presenter = new BitshipResi(v);
+                    presenter = new BitshipResi(mainView, v);
                    // presenter.setupENV(String.valueOf(txt.getText()), kodeKurir);
                     presenter.setupENV(String.valueOf(txt.getText()), kodeKurir);
                 }
@@ -159,7 +164,6 @@ public class HomeFragment extends Fragment implements MainContract.View {
             homeViewModel.getCekResi().observe(getViewLifecycleOwner(), new Observer<CekResi>() {
                 @Override
                 public void onChanged(CekResi cekResi) {
-                    Log.d("ini json", "Data = "+cekResi);
                     resiAdapter = new ResiAdapter(getActivity(), getContext(), cekResi, cekResiRajaOngkir);
                     resiHistoryAdapter = new ResiHistoryAdapter(getActivity(), getContext(), cekResi, cekResiRajaOngkir);
                     showResiadapter();
@@ -207,10 +211,11 @@ public class HomeFragment extends Fragment implements MainContract.View {
     }
 
     public void saveResi(){
-        db.insert(label, cekResi.waybill_id, company, status);
+        db.insert(label, waybill, company, status);
     }
+
     private void showresidb(){
-        resiAdapterDB = new ResiAdapterDB(getActivity(), getContext(), v);
+        resiAdapterDB = new ResiAdapterDB(getActivity(), getContext(), mainView);
         list = db.getResi();
         resiAdapterDB.setList(list);
 
@@ -250,31 +255,22 @@ public class HomeFragment extends Fragment implements MainContract.View {
         if (cekResiRajaOngkir.getRajaongkir() != null){
             homeViewModel.getCekResi().setValue(null);
             label = cekResiRajaOngkir.getRajaongkir().getResult().getSummary().getReceiver_name();
+            waybill = cekResiRajaOngkir.getRajaongkir().getResult().getSummary().getWaybill_number();
             company = cekResiRajaOngkir.getRajaongkir().getResult().getSummary().getCourier_name();
             status = cekResiRajaOngkir.getRajaongkir().getResult().getSummary().getStatus();
             homeViewModel.getCekResiRajaOngkir().setValue(cekResiRajaOngkir);
-
+            saveResi();
             showResi();
         }else{
             homeViewModel.getCekResiRajaOngkir().setValue(null);
-            label = cekResi.getDestination().getContact_name();
-            company = cekResi.getCourier().getCompany();
-            status = cekResi.getStatus();
+            label = data.getDestination().getContact_name();
+            waybill = data.getWaybill_id();
+            company = data.getCourier().getCompany();
+            status = data.getStatus();
             homeViewModel.getCekResi().setValue(cekResi);
-
+            saveResi();
             showResi();
         }
-        saveResi();
-
-    }
-
-    @Override
-    public void onResultSearch(Address data) {
-
-    }
-
-    @Override
-    public void onResultOngkir(CekOngkir data) {
 
     }
 
@@ -292,19 +288,4 @@ public class HomeFragment extends Fragment implements MainContract.View {
         Log.d("ini json", resiModel.toString());
     }
 
-    @Override
-    public void showMessage(String msg) {
-        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
-       // Log.d("ini json", msg);
-    }
-
-    @Override
-    public String getOrigin() {
-        return null;
-    }
-
-    @Override
-    public String getDestination() {
-        return null;
-    }
 }

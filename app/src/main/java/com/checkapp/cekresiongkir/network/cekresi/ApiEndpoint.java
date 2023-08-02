@@ -2,6 +2,8 @@ package com.checkapp.cekresiongkir.network.cekresi;
 
 import com.checkapp.cekresiongkir.network.Address;
 import com.checkapp.cekresiongkir.network.cekongkir.CekOngkir;
+import com.checkapp.cekresiongkir.network.cekongkir.rajaongkir.CekOngkirRaja;
+import com.checkapp.cekresiongkir.network.cekongkir.rajaongkir.RajaOngkirCity;
 import com.checkapp.cekresiongkir.network.cekresi.rajaongkir.CekResiRajaOngkir;
 
 import okhttp3.RequestBody;
@@ -35,6 +37,20 @@ public interface ApiEndpoint {
         @FormUrlEncoded
         @POST("waybill")
         Call<CekResiRajaOngkir> getResiRajaOngkir(@Field("waybill") String waybill, @Field("courier") String courier);
+
+
+        @GET("city")
+        Call<RajaOngkirCity> getSearchCityRaja();
+
+        @FormUrlEncoded
+        @POST("cost")
+        Call<CekOngkirRaja> getOngkirRaja(@Field("origin") String origin,
+                                          @Field("originType") String originType,
+                                          @Field("destination") String destination,
+                                          @Field("destinationType") String destinationType,
+                                          @Field("weight") String weight,
+                                          @Field("courier") String courier);
+
     }
 
 }

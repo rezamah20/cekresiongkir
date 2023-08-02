@@ -29,12 +29,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
                     android:background="@color/white"
-                    android:hint="Masukan Asal Pengirim"
+                    android:hint="Masukan Kota/Kabupaten Asal"
                     android:paddingStart="10dp"
                     android:lines="1"
                     android:maxLines="1"
                     android:singleLine="true"
                     tools:ignore="HardcodedText" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvsearchorigin"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:visibility="gone"
+                    />
             </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -50,13 +57,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:background="@color/white"
-                android:hint="Masukan Tujuan Pengirim"
+                android:hint="Masukan Kota/Kabupaten Tujuan"
                 android:paddingStart="10dp"
                 android:lines="1"
                 android:maxLines="1"
                 android:singleLine="true"
                 tools:ignore="HardcodedText" />
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvsearchdestination"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:visibility="gone"
+                />
         </com.google.android.material.textfield.TextInputLayout>
 
 

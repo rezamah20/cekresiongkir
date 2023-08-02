@@ -35,16 +35,17 @@ public class ResiAdapterDB extends RecyclerView.Adapter<ResiAdapterDB.ResiDBView
 
     Activity activity;
     Context context;
-    MainContract.View v;
+    MainContract.MainView mainView;
+    MainContract.View vv;
     private BitshipResi presenter;
     DatabaseHandler db;
 
     private ArrayList<ResiModel> list = new ArrayList<>();
 
-    public ResiAdapterDB(Activity activity, Context context, MainContract.View view){
+    public ResiAdapterDB(Activity activity, Context context, MainContract.MainView view){
         this.activity = activity;
         this.context = context;
-        this.v =view;
+        this.mainView =view;
         db = new DatabaseHandler(context);
     }
 
@@ -91,7 +92,7 @@ public class ResiAdapterDB extends RecyclerView.Adapter<ResiAdapterDB.ResiDBView
                             case R.id.btn_ubah:
 
                                 FragmentManager fm = ((AppCompatActivity) context).getSupportFragmentManager();
-                                DialogFragEditResi dialogFragment=new DialogFragEditResi(v);
+                                DialogFragEditResi dialogFragment=new DialogFragEditResi(mainView);
 
                                 dialogFragment.show(fm,"Edit  Fragment");
 
@@ -114,7 +115,7 @@ public class ResiAdapterDB extends RecyclerView.Adapter<ResiAdapterDB.ResiDBView
                                 return true;
                             case R.id.btn_cekresi:
 
-                                 presenter = new BitshipResi(v);
+                                 presenter = new BitshipResi(mainView, vv);
                                  presenter.setupENV(waybill, kurirkode);
                                 return true;
                             default:
@@ -124,8 +125,6 @@ public class ResiAdapterDB extends RecyclerView.Adapter<ResiAdapterDB.ResiDBView
                 });
 
                 popup.show();
-
-                Log.d("ini json", "carviewclick");
             }
         });
 

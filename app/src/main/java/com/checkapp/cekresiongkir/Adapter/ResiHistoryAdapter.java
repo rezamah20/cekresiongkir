@@ -2,6 +2,7 @@ package com.checkapp.cekresiongkir.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,7 @@ public class ResiHistoryAdapter extends RecyclerView.Adapter<ResiHistoryAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ResiHistoryViewHolder holder, int position) {
+
         if (cekResiRajaOngkir.getRajaongkir() != null) {
             holder.history_status.setText(cekResiRajaOngkir.getRajaongkir().getResult().getManifest().get(position).getCity_name());
             holder.history_note.setText(cekResiRajaOngkir.getRajaongkir().getResult().getManifest().get(position).getManifest_description());
