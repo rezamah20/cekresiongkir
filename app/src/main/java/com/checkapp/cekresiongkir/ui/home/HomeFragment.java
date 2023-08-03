@@ -1,51 +1,45 @@
 package com.checkapp.cekresiongkir.ui.home;
 
-import android.os.Build;
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.checkapp.cekresiongkir.Adapter.MaxSpinner;
 import com.checkapp.cekresiongkir.Adapter.ResiAdapter;
 import com.checkapp.cekresiongkir.Adapter.ResiAdapterDB;
 import com.checkapp.cekresiongkir.Adapter.ResiHistoryAdapter;
 import com.checkapp.cekresiongkir.Adapter.SpinnerKurirAdapter;
-import com.checkapp.cekresiongkir.R;
 import com.checkapp.cekresiongkir.database.DatabaseHandler;
 import com.checkapp.cekresiongkir.database.ResiModel;
 import com.checkapp.cekresiongkir.databinding.FragmentHomeBinding;
-import com.checkapp.cekresiongkir.network.Address;
 import com.checkapp.cekresiongkir.network.BitshipResi;
 import com.checkapp.cekresiongkir.network.MainContract;
-import com.checkapp.cekresiongkir.network.cekongkir.CekOngkir;
-import com.checkapp.cekresiongkir.network.cekongkir.rajaongkir.CekOngkirRaja;
-import com.checkapp.cekresiongkir.network.cekongkir.rajaongkir.CekOngkirRajaModel;
-import com.checkapp.cekresiongkir.network.cekongkir.rajaongkir.RajaOngkirCity;
 import com.checkapp.cekresiongkir.network.cekresi.CekResi;
 import com.checkapp.cekresiongkir.network.cekresi.rajaongkir.CekResiRajaOngkir;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class HomeFragment extends Fragment implements MainContract.MainView {
@@ -72,6 +66,8 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
     private MainContract.MainView mainView;
     TextInputEditText txt;
     String kodeKurir, label, waybill, company, status;
+    MaxSpinner spinnerresi;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -88,54 +84,15 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
         cekresi = binding.btnCekresi;
         llMain = binding.llMain;
         lnresidb = binding.lnresidb;
+        spinnerresi = binding.kurirDropdown;
         mainView = this;
         db = new DatabaseHandler(getContext());
 
 
-        Spinner spinnerresi = binding.kurirDropdown;
-       // ArrayAdapter<String> spinnerresiadapter = new ArrayAdapter<>(getContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, getResources().getStringArray(R.array.resikurir_array));
-       // spinnerresiadapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
-
         showResi();
         showresidb();
+        spinnerset();
 
-        // spinnerresi.
-        SpinnerKurirAdapter spinnerKurirAdapter = new SpinnerKurirAdapter(getContext());
-        spinnerresi.setAdapter(spinnerKurirAdapter);
-        spinnerresi.setOnTouchListener(new View.OnTouchListener() {
-            @RequiresApi(api = Build.VERSION_CODES.M)
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                InputMethodManager imm=(InputMethodManager)getContext().getSystemService(getContext().INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(txt.getWindowToken(), 0);
-
-                return false;
-            }
-
-        });
-        spinnerresi.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                kodeKurir = spinnerKurirAdapter.kodeKurir[i];
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-              //  Log.d("ini json", "spinner focus change");
-
-            }
-        });
-
-
-        spinnerresi.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                if (b) {
-                    Log.d("ini json", "spinner focus change");
-                }
-
-            }
-        });
 
 
 
@@ -186,6 +143,35 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
                 }
             });
         }
+
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void spinnerset(){
+        SpinnerKurirAdapter spinnerKurirAdapter = new SpinnerKurirAdapter(getContext());
+        spinnerresi.setAdapter(spinnerKurirAdapter);
+
+        spinnerresi.setOnTouchListener((view, motionEvent) -> {
+            InputMethodManager imm;
+            getContext();
+            imm = (InputMethodManager) Objects.requireNonNull(getContext()).getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(txt.getWindowToken(), 0);
+
+            return false;
+        });
+
+        spinnerresi.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                kodeKurir = spinnerKurirAdapter.kodeKurir[i];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                //  Log.d("ini json", "spinner focus change");
+
+            }
+        });
 
     }
 

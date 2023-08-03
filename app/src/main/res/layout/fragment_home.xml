@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment"
-    android:background="#F5F3F3">
+    android:background="#F5F3F3"
+
+    >
 
     <LinearLayout
         android:id="@+id/LN1"
@@ -65,16 +67,17 @@
         tools:ignore="MissingConstraints"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
         >
-    <Spinner
+
+    <com.checkapp.cekresiongkir.Adapter.MaxSpinner
         android:id="@+id/kurir_dropdown"
         android:background="@drawable/spinner_bg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        tools:ignore="MissingConstraints"
-        android:popupBackground="@drawable/spinner_popup_bg"
+        android:dropDownVerticalOffset="45dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
+        android:spinnerMode="dropdown"
         />
 
 
@@ -203,6 +206,5 @@
                 android:visibility="gone"
                 app:layout_anchorGravity="bottom|right|end" />
     </RelativeLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

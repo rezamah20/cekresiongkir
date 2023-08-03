@@ -5,12 +5,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.checkapp.cekresiongkir.R;
 import com.checkapp.cekresiongkir.database.ResiModel;
 import com.checkapp.cekresiongkir.databinding.FragmentNotificationsBinding;
 import com.checkapp.cekresiongkir.network.Address;
@@ -41,6 +44,14 @@ public class NotificationsFragment extends Fragment{
         binding = FragmentNotificationsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        Spinner spinner = binding.spinnerAlgorithm;
+
+        String[] Item = {"Bakso","Ayam Goreng","Mie Rebus","Nasi Padang",
+                "Ikan Bakar","Seblak","Gorengan","Mie Ayam"};
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
+                android.R.layout.simple_spinner_dropdown_item,Item);
+
+        spinner.setAdapter(adapter);
 
         //presenter.getOngkirRaja();
 

@@ -1,11 +1,13 @@
 package com.checkapp.cekresiongkir.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.checkapp.cekresiongkir.R;
@@ -43,7 +45,7 @@ public class SpinnerKurirAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        view = inflter.inflate(R.layout.kurir_spinner_item, null);
+        view = inflter.inflate(R.layout.kurir_spinner_item, viewGroup, false);
         ImageView icon = (ImageView) view.findViewById(R.id.imageview);
         TextView names = (TextView) view.findViewById(R.id.textView);
         TextView kodekurir = (TextView) view.findViewById(R.id.textkurirkode);

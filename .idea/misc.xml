@@ -20,7 +20,8 @@
         <entry key="..\:/light/cekresiongkir/app/src/main/res/layout/custom_search.xml" value="0.21927083333333333" />
         <entry key="..\:/light/cekresiongkir/app/src/main/res/layout/dialog_frag_editresi.xml" value="0.22" />
         <entry key="..\:/light/cekresiongkir/app/src/main/res/layout/fragment_dashboard.xml" value="0.25" />
-        <entry key="..\:/light/cekresiongkir/app/src/main/res/layout/fragment_home.xml" value="0.22" />
+        <entry key="..\:/light/cekresiongkir/app/src/main/res/layout/fragment_home.xml" value="0.5" />
+        <entry key="..\:/light/cekresiongkir/app/src/main/res/layout/fragment_notifications.xml" value="0.4375" />
         <entry key="..\:/light/cekresiongkir/app/src/main/res/layout/item_cekongkir.xml" value="0.25" />
         <entry key="..\:/light/cekresiongkir/app/src/main/res/layout/item_city.xml" value="0.1984375" />
         <entry key="..\:/light/cekresiongkir/app/src/main/res/layout/item_resi.xml" value="0.25" />

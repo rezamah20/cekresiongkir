@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,6 +12,8 @@
         android:orientation="horizontal"
         android:layout_marginTop="3dp"
         android:layout_marginBottom="3dp"
+        android:id="@+id/spinnerLL"
+
         >
     <ImageView
         android:id="@+id/imageview"
@@ -40,4 +43,4 @@
             android:visibility="invisible"
             android:textColor="#000" />
     </LinearLayout>
-</LinearLayout>
+</RelativeLayout >
