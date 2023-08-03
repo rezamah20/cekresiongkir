@@ -93,8 +93,8 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
 
 
         Spinner spinnerresi = binding.kurirDropdown;
-        ArrayAdapter<String> spinnerresiadapter = new ArrayAdapter<>(getContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, getResources().getStringArray(R.array.resikurir_array));
-        spinnerresiadapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
+       // ArrayAdapter<String> spinnerresiadapter = new ArrayAdapter<>(getContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, getResources().getStringArray(R.array.resikurir_array));
+       // spinnerresiadapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
 
         showResi();
         showresidb();
@@ -108,8 +108,10 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
             public boolean onTouch(View v, MotionEvent event) {
                 InputMethodManager imm=(InputMethodManager)getContext().getSystemService(getContext().INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(txt.getWindowToken(), 0);
+
                 return false;
             }
+
         });
         spinnerresi.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -119,9 +121,23 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
+              //  Log.d("ini json", "spinner focus change");
 
             }
         });
+
+
+        spinnerresi.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (b) {
+                    Log.d("ini json", "spinner focus change");
+                }
+
+            }
+        });
+
+
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -287,5 +303,7 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
         resiAdapterDB.setList(list);
         Log.d("ini json", resiModel.toString());
     }
+
+
 
 }

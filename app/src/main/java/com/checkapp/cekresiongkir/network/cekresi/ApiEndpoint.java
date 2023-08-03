@@ -13,17 +13,18 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ApiEndpoint {
 
     interface getBitship{
-        @GET("v1/68ffba86-2f4e-4342-96a5-97c1f92bb2c8")
-        Call<CekResi> getResia();
+      //  @GET("v1/68ffba86-2f4e-4342-96a5-97c1f92bb2c8")
+      //  Call<CekResi> getResia();
 
 
-         //  @GET("v1/trackings/{waybill_id}/couriers/{courier_code}")
-        // Call<CekResi> getResia(@Path("waybill_id") String waybill_id, @Path("courier_code") String courier_code);
+        @GET("v1/trackings/{waybill_id}/couriers/{courier_code}")
+        Call<CekResi> getResia(@Path("waybill_id") String waybill_id, @Path("courier_code") String courier_code);
 
         @POST("v1/rates/couriers")
         Call<CekOngkir> getKurir(@Body RequestBody postKurir);

@@ -20,9 +20,9 @@ public class SpinnerKurirAdapter extends BaseAdapter {
 
     public SpinnerKurirAdapter(Context context){
         this.context = context;
-        this.flags = new int[]{R.drawable.icon_anteraja, R.drawable.icon_deliveree, R.drawable.icon_jt, R.drawable.icon_jne, R.drawable.icon_lalamove, R.drawable.icon_lion, R.drawable.icon_ninjaexpress, R.drawable.icon_paxel, R.drawable.icon_rpx, R.drawable.icon_sap, R.drawable.icon_sicepat, R.drawable.icon_tiki};
-        this.namaKurir = new String[]{"Anter Aja", "Deliveree", "JNT", "JNE Express", "Lala Move", "Lion", "Ninja Express", "Paxel", "RPX", "SAP", "SiCepat", "Tiki"};
-        this.kodeKurir = new String[]{"anteraja", "deliveree", "jnt", "jne", "lalamove", "lion", "ninja", "paxel", "rpx", "sap", "sicepat", "tiki"};
+        this.flags = new int[]{R.drawable.icon_anteraja, R.drawable.icon_deliveree, R.drawable.icon_jt, R.drawable.icon_jne, R.drawable.icon_lalamove, R.drawable.icon_lion, R.drawable.icon_ninjaexpress, R.drawable.icon_paxel, R.drawable.icon_rpx, R.drawable.icon_sap, R.drawable.icon_sicepat, R.drawable.icon_tiki, R.drawable.icon_21expressdse, R.drawable.icon_first, R.drawable.icon_idl, R.drawable.icon_rex, R.drawable.icon_ide, R.drawable.icon_sentral, R.drawable.icon_jtl, R.drawable.icon_star};
+        this.namaKurir = new String[]{"Anter Aja", "Deliveree", "JNT", "JNE Express", "Lala Move", "Lion", "Ninja Express", "Paxel", "RPX", "SAP", "SiCepat", "Tiki", "21 Express (DSE)", "First Logistics", "IDL Cargo", "Royal Express Indonesia", "ID Express", "Sentral Cargo", "JTL Express", "Star Cargo"};
+        this.kodeKurir = new String[]{"anteraja", "deliveree", "jnt", "jne", "lalamove", "lion", "ninja", "paxel", "rpx", "sap", "sicepat", "tiki", "dse", "first", "idl", "rex", "ide", "sentral", "jtl", "star"};
         inflter =(LayoutInflater.from(context));
     }
 
@@ -53,4 +53,6 @@ public class SpinnerKurirAdapter extends BaseAdapter {
         kodekurir.setVisibility(View.GONE);
         return view;
     }
+
+
 }

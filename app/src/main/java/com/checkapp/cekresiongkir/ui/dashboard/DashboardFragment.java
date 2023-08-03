@@ -14,10 +14,14 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -51,8 +55,16 @@ public class DashboardFragment extends Fragment implements MainContract.View {
     private Button cekongkir;
     private String originid, destinationid, originpostal, destipostal;
     private RecyclerView rvsearchOrigin;
+    private CardView cvsearchOrigin;
+    private CardView cvsearchDesti;
     private RecyclerView rvsearchdestination;
+    private ImageButton cleaninputorigin;
+    private ImageButton cleaninputdesti;
     ArrayList<RajaOngkirCity.RajaOngkirCekCity.result> datarajaongkircity;
+    private LinearLayout llMain;
+    private LinearLayout rvrongkirtidakada;
+    private ProgressBar progressBar;
+
 
     private SearchAdapter searchAdapter;
     MainContract.MainView mainView;
@@ -83,11 +95,18 @@ public class DashboardFragment extends Fragment implements MainContract.View {
        // asalpengirim = binding.inputorigin;
         autoCompleteOrigin = binding.inputorigin;
         autoCompleteDestination = binding.inputDestination;
-        berat = binding.inputBerat;
+        berat = binding.inputberat;
         cekongkir = binding.btnCekongkir;
         recyclerViewpricing = binding.rvpricing;
         rvsearchdestination = binding.rvsearchdestination;
         rvsearchOrigin = binding.rvsearchorigin;
+        cvsearchOrigin = binding.cvsearchorigin;
+        cvsearchDesti = binding.cvsearchdesti;
+        cleaninputorigin = binding.cleaninputorigin;
+        cleaninputdesti = binding.cleanDestiorigin;
+        llMain = binding.llMain;
+        rvrongkirtidakada = binding.rvrongkirtidakada;
+        progressBar = binding.progressBar;
 
         recyclerViewpricing.setVisibility(View.GONE);
         v = this;
@@ -104,9 +123,13 @@ public class DashboardFragment extends Fragment implements MainContract.View {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (i >= 2){
-                    rvsearchOrigin.setVisibility(View.VISIBLE);
+                if (charSequence.length() != 0){
+                    cvsearchOrigin.setVisibility(View.VISIBLE);
                     filter(String.valueOf(charSequence));
+                    cleaninputorigin.setVisibility(View.VISIBLE);
+                    cleaninputorigin.setOnClickListener(view -> autoCompleteOrigin.setText(""));
+                }else {
+                    cleaninputorigin.setVisibility(View.GONE);
                 }
             }
 
@@ -125,9 +148,13 @@ public class DashboardFragment extends Fragment implements MainContract.View {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (i >= 2){
-                    rvsearchdestination.setVisibility(View.VISIBLE);
+                if (charSequence.length() != 0){
+                    cvsearchDesti.setVisibility(View.VISIBLE);
                     filter(String.valueOf(charSequence));
+                    cleaninputdesti.setVisibility(View.VISIBLE);
+                    cleaninputdesti.setOnClickListener(view -> autoCompleteDestination.setText(""));
+                }else {
+                    cleaninputdesti.setVisibility(View.GONE);
                 }
             }
 
@@ -139,15 +166,12 @@ public class DashboardFragment extends Fragment implements MainContract.View {
 
 
 
-        cekongkir.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                originid = dashboardViewModel.getIdidOrigin().getValue();
-                destinationid = dashboardViewModel.getIdDestination().getValue();
-                originpostal = dashboardViewModel.getPostalCodeOrigin().getValue();
-                destipostal = dashboardViewModel.getPostalCodeDesti().getValue();
-                presenter.setupOKR(originid, destinationid, originpostal, destipostal, String.valueOf(berat.getText()));
-            }
+        cekongkir.setOnClickListener(view -> {
+            originid = dashboardViewModel.getIdidOrigin().getValue();
+            destinationid = dashboardViewModel.getIdDestination().getValue();
+            originpostal = dashboardViewModel.getPostalCodeOrigin().getValue();
+            destipostal = dashboardViewModel.getPostalCodeDesti().getValue();
+            presenter.setupOKR(originid, destinationid, originpostal, destipostal, String.valueOf(berat.getText()));
         });
 
         return root;
@@ -191,6 +215,9 @@ public class DashboardFragment extends Fragment implements MainContract.View {
                     recyclerViewpricing.setLayoutManager(layoutManager);
                     recyclerViewpricing.setAdapter(ongkirAdapter);
                     recyclerViewpricing.setVisibility(View.VISIBLE);
+                    llMain.setVisibility(View.GONE);
+                    cvsearchOrigin.setVisibility(View.GONE);
+                    cvsearchDesti.setVisibility(View.GONE);
                 }
             });
         }else if (dashboardViewModel.getCekOngkir().getValue() != null) {
@@ -203,6 +230,9 @@ public class DashboardFragment extends Fragment implements MainContract.View {
                     recyclerViewpricing.setLayoutManager(layoutManager);
                     recyclerViewpricing.setAdapter(ongkirAdapter);
                     recyclerViewpricing.setVisibility(View.VISIBLE);
+                    llMain.setVisibility(View.GONE);
+                    cvsearchOrigin.setVisibility(View.GONE);
+                    cvsearchDesti.setVisibility(View.GONE);
                 }
             });
         }
@@ -241,12 +271,22 @@ public class DashboardFragment extends Fragment implements MainContract.View {
 
     @Override
     public void onLoadingOngki(boolean loadng, int progress) {
+        if (loadng){
+            llMain.setVisibility(View.VISIBLE);
+            recyclerViewpricing.setVisibility(View.GONE);
+            rvrongkirtidakada.setVisibility(View.GONE);
+            progressBar.setProgress(progress);
+        }else{
+            progressBar.setProgress(progress);
+        }
 
     }
 
     @Override
     public void onErrorOngkir(CekOngkir cekOngkir) {
-
+        recyclerViewpricing.setVisibility(View.GONE);
+        llMain.setVisibility(View.GONE);
+        rvrongkirtidakada.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -267,12 +307,12 @@ public class DashboardFragment extends Fragment implements MainContract.View {
             autoCompleteOrigin.setText(cityname+", "+provincename+", Indonesia");
             dashboardViewModel.getIdidOrigin().setValue(city_id);
             dashboardViewModel.getPostalCodeOrigin().setValue(postalcode);
-            rvsearchOrigin.setVisibility(View.GONE);
+            cvsearchOrigin.setVisibility(View.GONE);
         }else {
             autoCompleteDestination.setText(cityname+", "+provincename+", Indonesia");
             dashboardViewModel.getIdDestination().setValue(city_id);
             dashboardViewModel.getPostalCodeDesti().setValue(postalcode);
-            rvsearchdestination.setVisibility(View.GONE);
+            cvsearchDesti.setVisibility(View.GONE);
         }
     }
 

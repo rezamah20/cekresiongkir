@@ -62,7 +62,7 @@ public class BitshipResi implements MainContract.Presenter{
 
     @Override
     public void getResi() {
-        endpointbitship.getResia()//waybill, courier_code
+        endpointbitship.getResia(waybill, courier_code)//
                     .enqueue(new Callback<CekResi>() {
                         @Override
                         public void onResponse(Call<CekResi> call, Response<CekResi> response) {
@@ -154,7 +154,11 @@ public class BitshipResi implements MainContract.Presenter{
 
     @Override
     public void getResiRajaOngkir() {
-        endpointrajaongkir.getResiRajaOngkir("10007276206862", "anteraja")
+        String courier_code_raja = courier_code;
+        if (courier_code_raja.equals("jnt")){
+            courier_code_raja = "jet";
+        }
+        endpointrajaongkir.getResiRajaOngkir(waybill, courier_code_raja)
                 .enqueue(new Callback<CekResiRajaOngkir>() {
                     @Override
                     public void onResponse(Call<CekResiRajaOngkir> call, Response<CekResiRajaOngkir> response) {
@@ -200,8 +204,8 @@ public class BitshipResi implements MainContract.Presenter{
 
     @Override
     public void getOngkirRaja() {
-            String courier = "jne:pos:tiki:rpx:wahana:sicepat:jnt:sap:dse:ncs:ninja:lion:rex:ide:sentral:anteraja:pahala:first:jtl";
-            endpointrajaongkir.getOngkirRaja(originid, "citya", destinationid, "citya", weight, courier)
+            String courier = "jne:pos:tiki:rpx:wahana:sicepat:jnt:sap:dse:ncs:ninja:lion:rex:ide:sentral:anteraja:pahala";
+            endpointrajaongkir.getOngkirRaja(originid, "city", destinationid, "city", weight, courier)
                     .enqueue(new Callback<CekOngkirRaja>() {
                 @Override
                 public void onResponse(Call<CekOngkirRaja> call, Response<CekOngkirRaja> response) {
@@ -268,6 +272,4 @@ public class BitshipResi implements MainContract.Presenter{
         getOngkirRaja();
 
     }
-
-
 }

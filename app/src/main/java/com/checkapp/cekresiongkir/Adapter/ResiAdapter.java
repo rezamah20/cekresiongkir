@@ -66,7 +66,7 @@ public class ResiAdapter extends RecyclerView.Adapter<ResiAdapter.ResiViewHolder
            // Log.d("ini json", "Resi Tidak Di temukan = "+data);
             holder.resiada.setVisibility(View.GONE);
             holder.resitidakada.setVisibility(View.VISIBLE);
-            holder.statusresi.setText("Resi Tidak Di temukan");
+            holder.statusresi.setText("Resi Tidak Di Temukan, Coba Lagi Nanti");
         }
 
     }
