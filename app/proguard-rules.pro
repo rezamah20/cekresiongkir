@@ -67,11 +67,11 @@
 -keep,allowoptimization,allowshrinking,allowobfuscation class <3>
 
 
--keep public class com.checkapp.cekresiongkir.network.MainContract
--keep public class com.checkapp.cekresiongkir.network.BitshipResi
--keep public class com.checkapp.cekresiongkir.ui.home.HomeFragment
--keep public class com.checkapp.cekresiongkir.network.*
--keep public class com.checkapp.cekresiongkir.network.cekresi.*
+-keep public class com.cekresi.cekongkir.network.MainContract
+-keep public class com.cekresi.cekongkir.ui.home.HomeFragment
+-keep public class com.cekresi.cekongkir.network.*
+-keep public class com.cekresi.cekongkir.network.cekresi.*
+-keep public class com.cekresi.cekongkir.*
 
 -keep class androidx.lifecycle.** { *; }
 

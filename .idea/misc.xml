@@ -4,32 +4,40 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/light/cekresiongkir/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.121" />
+        <entry key="..\:/light/cekresiongkir/app/src/main/res/drawable/gnt_outline_shape.xml" value="0.1035" />
+        <entry key="..\:/light/cekresiongkir/app/src/main/res/drawable/gnt_rounded_corners_shape.xml" value="0.1035" />
         <entry key="..\:/light/cekresiongkir/app/src/main/res/drawable/ic_baseline_save_24.xml" value="0.121" />
         <entry key="..\:/light/cekresiongkir/app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.121" />
         <entry key="..\:/light/cekresiongkir/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.121" />
         <entry key="..\:/light/cekresiongkir/app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.121" />
+        <entry key="..\:/light/cekresiongkir/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1045" />
         <entry key="..\:/light/cekresiongkir/app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.121" />
         <entry key="..\:/light/cekresiongkir/app/src/main/res/drawable/item_resi.xml" value="0.132" />
+        <entry key="..\:/light/cekresiongkir/app/src/main/res/drawable/shape_autotext.xml" value="0.1115" />
         <entry key="..\:/light/cekresiongkir/app/src/main/res/drawable/shape_resi.xml" value="0.132" />
         <entry key="..\:/light/cekresiongkir/app/src/main/res/drawable/spinner_arrow.xml" value="0.211" />
         <entry key="..\:/light/cekresiongkir/app/src/main/res/drawable/spinner_bg.xml" value="0.211" />
         <entry key="..\:/light/cekresiongkir/app/src/main/res/drawable/spinner_popup_bg.xml" value="0.211" />
         <entry key="..\:/light/cekresiongkir/app/src/main/res/drawable/textinput_border.xml" value="0.128" />
-        <entry key="..\:/light/cekresiongkir/app/src/main/res/layout/activity_main.xml" value="0.16" />
+        <entry key="..\:/light/cekresiongkir/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/light/cekresiongkir/app/src/main/res/layout/activity_search.xml" value="0.2203125" />
         <entry key="..\:/light/cekresiongkir/app/src/main/res/layout/custom_search.xml" value="0.21927083333333333" />
         <entry key="..\:/light/cekresiongkir/app/src/main/res/layout/dialog_frag_editresi.xml" value="0.22" />
-        <entry key="..\:/light/cekresiongkir/app/src/main/res/layout/fragment_dashboard.xml" value="0.25" />
+        <entry key="..\:/light/cekresiongkir/app/src/main/res/layout/fragment_dashboard.xml" value="0.455012853470437" />
         <entry key="..\:/light/cekresiongkir/app/src/main/res/layout/fragment_home.xml" value="0.5" />
-        <entry key="..\:/light/cekresiongkir/app/src/main/res/layout/fragment_notifications.xml" value="0.4375" />
-        <entry key="..\:/light/cekresiongkir/app/src/main/res/layout/item_cekongkir.xml" value="0.25" />
+        <entry key="..\:/light/cekresiongkir/app/src/main/res/layout/fragment_notifications.xml" value="0.4214659685863874" />
+        <entry key="..\:/light/cekresiongkir/app/src/main/res/layout/item_cekongkir.xml" value="0.5" />
         <entry key="..\:/light/cekresiongkir/app/src/main/res/layout/item_city.xml" value="0.1984375" />
-        <entry key="..\:/light/cekresiongkir/app/src/main/res/layout/item_resi.xml" value="0.25" />
-        <entry key="..\:/light/cekresiongkir/app/src/main/res/layout/item_resi_histori.xml" value="0.25" />
+        <entry key="..\:/light/cekresiongkir/app/src/main/res/layout/item_resi.xml" value="0.67" />
+        <entry key="..\:/light/cekresiongkir/app/src/main/res/layout/item_resi_histori.xml" value="0.5" />
         <entry key="..\:/light/cekresiongkir/app/src/main/res/layout/item_residb.xml" value="0.2" />
         <entry key="..\:/light/cekresiongkir/app/src/main/res/layout/kurir_spinner_item.xml" value="0.22" />
+        <entry key="..\:/light/cekresiongkir/app/src/main/res/layout/native_admob_cardview.xml" value="0.3926282051282051" />
+        <entry key="..\:/light/cekresiongkir/app/src/main/res/layout/native_admob_layout.xml" value="0.503125" />
         <entry key="..\:/light/cekresiongkir/app/src/main/res/menu/bottom_nav_menu.xml" value="0.21666666666666667" />
         <entry key="..\:/light/cekresiongkir/app/src/main/res/menu/option_residb.xml" value="0.2328125" />
+        <entry key="..\:/light/cekresiongkir/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.172" />
+        <entry key="..\:/light/cekresiongkir/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1045" />
       </map>
     </option>
   </component>

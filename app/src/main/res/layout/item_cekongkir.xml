@@ -82,6 +82,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="match_parent"
                     android:text="Rp. 150000"
+                    android:textColor="@color/orange_red"
                     android:gravity="center"
                     android:paddingEnd="10dp"
                     android:paddingStart="10dp"

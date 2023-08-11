@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/purple_200">
+
         <FrameLayout
             android:id="@+id/FRinputorigin"
             android:layout_width="fill_parent"
@@ -23,12 +24,12 @@
                 android:id="@+id/inputorigin"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
-                android:paddingEnd="40dp"
-                android:background="@color/white"
+                android:background="@drawable/shape_autotext"
                 android:hint="Masukan Kota/Kabupaten Asal"
                 android:lines="1"
                 android:maxLines="1"
                 android:paddingStart="10dp"
+                android:paddingEnd="40dp"
                 android:singleLine="true"
                 tools:ignore="HardcodedText" />
 
@@ -36,126 +37,126 @@
                 android:id="@+id/cleaninputorigin"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+                android:layout_gravity="right|center_vertical"
                 android:layout_marginRight="10dp"
                 android:adjustViewBounds="true"
-                android:layout_gravity="right|center_vertical"
                 android:background="@drawable/ic_baseline_clear_24"
-                android:scaleType="center"
                 android:onClick="clear"
-                android:visibility="gone"
-                />
+                android:scaleType="center"
+                android:visibility="gone" />
         </FrameLayout>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cvsearchorigin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
             android:layout_below="@+id/FRinputorigin"
-            android:visibility="gone"
             android:layout_margin="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
-            >
+            android:background="@color/white"
+            android:visibility="gone">
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvsearchorigin"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:visibility="visible" />
         </androidx.cardview.widget.CardView>
+
         <FrameLayout
             android:id="@+id/FRinputdesti"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/FRinputorigin"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
-            android:layout_below="@+id/FRinputorigin"
             android:layout_marginEnd="10dp">
+
             <AutoCompleteTextView
                 android:id="@+id/inputDestination"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
-                android:paddingEnd="40dp"
-                android:background="@color/white"
+                android:background="@drawable/shape_autotext"
                 android:hint="Masukan Kota/Kabupaten Tujuan"
                 android:lines="1"
                 android:maxLines="1"
                 android:paddingStart="10dp"
+                android:paddingEnd="40dp"
                 android:singleLine="true"
-                tools:ignore="HardcodedText"  />
+                tools:ignore="HardcodedText" />
+
             <ImageButton
                 android:id="@+id/cleanDestiorigin"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+                android:layout_gravity="right|center_vertical"
                 android:layout_marginRight="10dp"
                 android:adjustViewBounds="true"
-                android:layout_gravity="right|center_vertical"
                 android:background="@drawable/ic_baseline_clear_24"
-                android:scaleType="center"
                 android:onClick="clear"
-                android:visibility="gone"
-                />
+                android:scaleType="center"
+                android:visibility="gone" />
         </FrameLayout>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cvsearchdesti"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
             android:layout_below="@+id/FRinputdesti"
-            android:visibility="gone"
             android:layout_margin="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
-            >
+            android:background="@color/white"
+            android:visibility="gone">
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvsearchdestination"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:visibility="visible"
-                />
+                android:visibility="visible" />
         </androidx.cardview.widget.CardView>
 
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/MyDenseOutlined"
             android:id="@+id/TLinputberat"
+            style="@style/MyDenseOutlined"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:hintEnabled="false"
+            android:layout_below="@+id/FRinputdesti"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
-            android:layout_below="@+id/FRinputdesti"
-            >
+            app:hintEnabled="false">
+
             <FrameLayout
                 android:layout_width="170dp"
-                android:layout_height="35dp"
-                >
+                android:layout_height="35dp">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/inputberat"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="55dp"
+                    android:background="@drawable/shape_autotext"
                     android:hint="Berat"
                     android:inputType="number"
                     android:lines="1"
                     android:maxLines="1"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="55dp"
                     android:singleLine="true"
                     tools:ignore="HardcodedText" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="35dp"
+                    android:layout_gravity="right"
                     android:layout_marginRight="10dp"
-                    android:text="GRAM"
-                    android:textSize="15sp"
                     android:gravity="center"
                     android:paddingBottom="2.3dp"
+                    android:text="GRAM"
+                    android:textSize="15sp"
                     android:textStyle="bold"
-                    android:layout_gravity="right"
                     tools:ignore="HardcodedText" />
             </FrameLayout>
         </com.google.android.material.textfield.TextInputLayout>
@@ -168,9 +169,11 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
             android:backgroundTint="@color/teal_200"
             android:stateListAnimator="@null"
-            android:text="Cek Ongkir" />
+            android:text="Cek Ongkir"
+            android:textColor="@color/black" />
     </RelativeLayout>
 
     <LinearLayout
@@ -224,14 +227,14 @@
             android:textStyle="bold"/>
 
     </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvpricing"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rltop"
-        android:visibility="visible"
-        android:paddingBottom="50dp"
         android:paddingTop="10dp"
-        />
+        android:paddingBottom="50dp"
+        android:visibility="visible" />
 
 </RelativeLayout>

@@ -1,99 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment"
     android:background="#F5F3F3"
-
     >
 
     <LinearLayout
         android:id="@+id/LN1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:background="@color/teal_200"
-        tools:ignore="MissingConstraints"
-        android:paddingBottom="10dp">
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        tools:ignore="MissingConstraints"
-        android:layout_marginTop="15dp"
-        android:paddingStart="10dp"
-        android:layout_marginBottom="10dp"
-        >
+        android:orientation="vertical"
+        android:paddingBottom="10dp"
+        tools:ignore="MissingConstraints">
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/MyDenseOutlined"
-            android:layout_width="350dp"
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            app:hintEnabled="false"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal"
+            android:paddingStart="10dp"
+            tools:ignore="MissingConstraints">
 
-            >
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/MyDenseOutlined"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                app:hintEnabled="false"
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputresi"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputresi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_resi"
+                    android:hint="Masukan Resi Disini"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    tools:ignore="HardcodedText" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageView
+                android:id="@+id/scanbarcode"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:gravity="center"
+                android:src="@drawable/barcode" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lnSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            tools:ignore="MissingConstraints">
+
+            <com.cekresi.cekongkir.Adapter.MaxSpinner
+                android:id="@+id/kurir_dropdown"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:hint="Masukan Resi Disini"
-                tools:ignore="HardcodedText"
-                android:maxLines="1"
-                android:lines="1"
-                android:singleLine="true"
-                />
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/spinner_bg"
+                android:dropDownVerticalOffset="45dp"
+                android:spinnerMode="dropdown" />
 
-        </com.google.android.material.textfield.TextInputLayout>
 
-        <ImageView
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_cekresi"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:src="@drawable/barcode"
-            android:gravity="center"
-            />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/lnSpinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        tools:ignore="MissingConstraints"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        >
-
-    <com.checkapp.cekresiongkir.Adapter.MaxSpinner
-        android:id="@+id/kurir_dropdown"
-        android:background="@drawable/spinner_bg"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:dropDownVerticalOffset="45dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:spinnerMode="dropdown"
-        />
-
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/btn_cekresi"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Cek Resi"
-        app:layout_constraintTop_toBottomOf="@+id/lnSpinner"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:backgroundTint="@color/purple_200"
-        />
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:backgroundTint="@color/purple_200"
+            android:text="Cek Resi"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@+id/lnSpinner" />
 
     </LinearLayout>
 
@@ -106,10 +102,8 @@
         android:layout_marginEnd="8dp"
         android:textAlignment="center"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_below="@+id/LN1"
+        />
 
     <LinearLayout
         android:id="@+id/llMain"
@@ -117,10 +111,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_below="@+id/LN1"
         >
 
         <ProgressBar
@@ -143,12 +134,42 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/rvresitidakada"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:cardCornerRadius="20dp"
+        app:cardUseCompatPadding="true"
+        android:background="@drawable/shape_resi"
+        android:layout_margin="10dp"
+        android:paddingLeft="10dp"
+        android:visibility="visible"
+        android:layout_below="@+id/LN1"
+        >
+        <TextView
+            android:id="@+id/statusresi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:textSize="20dp"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/statusresiket"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:textSize="15dp"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:visibility="visible"
         android:id="@+id/lnresidb"
-        app:layout_constraintTop_toBottomOf="@+id/LN1"
+        android:layout_below="@+id/LN1"
         >
         <TextView
             android:layout_width="match_parent"
@@ -161,50 +182,42 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvresidatadb"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="wrap_content"
             tools:ignore="MissingConstraints" />
     </LinearLayout>
-
-
-    <RelativeLayout
-        android:id="@+id/activity_crear_entrenamiento"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/LN1">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:id="@+id/testll"
-            >
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvresi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="visible"
+                android:layout_below="@+id/LN1"
                 tools:ignore="MissingConstraints" />
 
+    <LinearLayout
+        android:id="@+id/LNhistory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/rvresi"
+        android:paddingBottom="60dp">
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvhistory"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="wrap_content"
                 android:visibility="visible"
                 tools:ignore="MissingConstraints" />
-        </LinearLayout>
+    </LinearLayout>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/floatingbutton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/testll"
-                android:layout_alignRight="@+id/testll"
-                android:layout_margin="16dp"
+                android:layout_above="@+id/LNhistory"
+                android:layout_marginEnd="10dp"
+                android:layout_alignParentRight="true"
                 android:src="@drawable/ic_baseline_save_24"
-                app:layout_anchor="@id/testll"
-                android:visibility="gone"
-                app:layout_anchorGravity="bottom|right|end" />
-    </RelativeLayout>
+                android:visibility="visible"
+                />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

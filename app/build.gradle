@@ -6,13 +6,20 @@ plugins {
 
 android {
     compileSdk 33
-
+    signingConfigs {
+        release {
+            storeFile file('C:\\light\\keylite.jks')
+            storePassword 'Sempaklo123'
+            keyAlias 'cekresiongkir'
+            keyPassword 'Sempaklo123'
+        }
+    }
     defaultConfig {
-        applicationId "com.checkapp.cekresiongkir"
+        applicationId "com.cekresi.cekongkir"
         minSdk 21
         targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        versionCode 103
+        versionName "1.0.3"
 
 //        kotlinVersion = '1.8.0'
 
@@ -21,16 +28,18 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
-            shrinkResources true
-            multiDexEnabled true
+            minifyEnabled false
+            shrinkResources false
+            multiDexEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
         debug {
             minifyEnabled false
             shrinkResources false
             multiDexEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {
@@ -61,4 +70,10 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.7.2'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
     implementation 'com.squareup.okhttp3:okhttp:4.11.0'
+
+    implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
+
+    //admob
+    implementation 'com.google.android.gms:play-services-ads:22.2.0'
+
 }
