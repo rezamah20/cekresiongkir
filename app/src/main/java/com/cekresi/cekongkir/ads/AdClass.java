@@ -1,4 +1,4 @@
-package com.checkapp.cekresiongkir.ads;
+package com.cekresi.cekongkir.ads;
 
 import com.google.android.gms.ads.AdLoader;
 

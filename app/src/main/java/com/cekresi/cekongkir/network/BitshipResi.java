@@ -1,5 +1,6 @@
 package com.cekresi.cekongkir.network;
 
+import com.cekresi.cekongkir.ads.AdClass;
 import com.cekresi.cekongkir.network.cekongkir.CekOngkir;
 import com.cekresi.cekongkir.network.cekongkir.rajaongkir.CekOngkirRaja;
 import com.cekresi.cekongkir.network.cekongkir.rajaongkir.CekOngkirRajaModel;
@@ -14,7 +15,6 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.nativead.NativeAd;
 import com.google.android.gms.ads.nativead.NativeAdOptions;
-import com.checkapp.cekresiongkir.ads.AdClass;
 
 import android.app.Activity;
 import android.content.Context;
